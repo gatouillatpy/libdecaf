@@ -1,0 +1,7 @@
+dist/
+obj/
+.vs
+syntax: glob
+libdecaf.VC.VC.opendb
+libdecaf.VC.db
+libdecaf.vcxproj.user

@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{e850f24d-093f-4c30-a99c-413a7dfa71b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{bdd0568e-d423-4fcc-affe-6ba0c2a40f78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\per_field">
+      <UniqueIdentifier>{79188f72-d532-4b8e-8b6b-9fc0d10c47e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\per_curve">
+      <UniqueIdentifier>{132f6545-e9dd-453e-a66f-2df2da3b1b07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\p25519">
+      <UniqueIdentifier>{16c73b1d-2147-48da-b16c-22e1e90a665a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\p448">
+      <UniqueIdentifier>{a380996a-c77a-4d06-a154-349e5496932c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\sha512.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shake.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\spongerng.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per_field\f_generic.tmpl.c">
+      <Filter>Source Files\per_field</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per_curve\decaf.tmpl.c">
+      <Filter>Source Files\per_curve</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per_curve\decaf_gen_tables.tmpl.c">
+      <Filter>Source Files\per_curve</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per_curve\eddsa.tmpl.c">
+      <Filter>Source Files\per_curve</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per_curve\elligator.tmpl.c">
+      <Filter>Source Files\per_curve</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per_curve\scalar.tmpl.c">
+      <Filter>Source Files\per_curve</Filter>
+    </ClCompile>
+    <ClCompile Include="src\p25519\f_arithmetic.c">
+      <Filter>Source Files\p25519</Filter>
+    </ClCompile>
+    <ClCompile Include="src\p448\f_arithmetic.c">
+      <Filter>Source Files\p448</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\include\word.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\constant_time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\field.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\keccak_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\portable_endian.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

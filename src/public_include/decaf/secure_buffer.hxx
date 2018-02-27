@@ -62,7 +62,7 @@ public:
        typename std::allocator<void>::const_pointer = 0
     ) /*throw(std::bad_alloc)*/;
    inline void deallocate(T* p, size_t size) DECAF_NOEXCEPT;
-   inline size_t max_size() const DECAF_NOEXCEPT { return std::numeric_limits<size_t>::max() / sizeof(T); }
+   inline size_t max_size() const DECAF_NOEXCEPT { return (std::numeric_limits<size_t>::max)() / sizeof(T); }
    inline void construct(T* p, const T& t) { new(p) T(t); }
    inline void destroy(T* p) { p->~T(); }
    
@@ -408,7 +408,12 @@ protected:
     }
     inline void alloc() /*throw(std::bad_alloc)*/ {
         if (is_mine) return;
-        int ret = posix_memalign((void**)&ours.mine, T::alignment(), T::size());
+        int ret = 0;
+#ifdef _MSC_VER
+        ours.mine = (Wrapped*)_aligned_malloc(T::size(), T::alignment());
+#else
+        ret = posix_memalign((void**)&ours.mine, T::alignment(), T::size());
+#endif // _MSC_VER
         if (ret || !ours.mine) {
             is_mine = false;
             throw std::bad_alloc();
@@ -467,8 +472,15 @@ T* SanitizingAllocator<T,alignment>::allocate (
     void *v;
     int ret = 0;
  
-    if (alignment) ret = posix_memalign(&v, alignment, cnt * sizeof(T));
-    else v = malloc(cnt * sizeof(T));
+    if (alignment) {
+#ifdef _MSC_VER
+        v = _aligned_malloc(cnt * sizeof(T), alignment);
+#else
+        ret = posix_memalign(&v, alignment, cnt * sizeof(T));
+#endif
+    } else {
+        v = malloc(cnt * sizeof(T));
+    }
  
     if (ret || v==NULL) throw(std::bad_alloc());
     return reinterpret_cast<T*>(v);

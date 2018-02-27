@@ -43,7 +43,11 @@ protected:
     
 public:
     /** Add more data to running hash */
-    inline void update(const uint8_t *__restrict__ in, size_t len) DECAF_NOEXCEPT { decaf_sha3_update(wrapped,in,len); }
+#ifdef _MSC_VER
+    inline void update(const uint8_t *__restrict in, size_t len) DECAF_NOEXCEPT { decaf_sha3_update(wrapped,in,len); }
+#else
+    inline void update(const uint8_t *__restrict__ in, size_t len) DECAF_NOEXCEPT { decaf_sha3_update(wrapped, in, len); }
+#endif
 
     /** Add more data to running hash, C++ version. */
     inline void update(const Block &s) DECAF_NOEXCEPT { decaf_sha3_update(wrapped,s.data(),s.size()); }
@@ -174,12 +178,21 @@ public:
 };
 
 /** @cond internal */
+#ifdef _MSC_VER
+inline const struct decaf_kparams_s *SHAKE<128>::get_params() { return &DECAF_SHAKE128_params_s; }
+inline const struct decaf_kparams_s *SHAKE<256>::get_params() { return &DECAF_SHAKE256_params_s; }
+inline const struct decaf_kparams_s *SHA3<224>::get_params() { return  &DECAF_SHA3_224_params_s; }
+inline const struct decaf_kparams_s *SHA3<256>::get_params() { return  &DECAF_SHA3_256_params_s; }
+inline const struct decaf_kparams_s *SHA3<384>::get_params() { return  &DECAF_SHA3_384_params_s; }
+inline const struct decaf_kparams_s *SHA3<512>::get_params() { return  &DECAF_SHA3_512_params_s; }
+#else
 template<> inline const struct decaf_kparams_s *SHAKE<128>::get_params() { return &DECAF_SHAKE128_params_s; }
 template<> inline const struct decaf_kparams_s *SHAKE<256>::get_params() { return &DECAF_SHAKE256_params_s; }
 template<> inline const struct decaf_kparams_s *SHA3<224>::get_params() { return  &DECAF_SHA3_224_params_s; }
 template<> inline const struct decaf_kparams_s *SHA3<256>::get_params() { return  &DECAF_SHA3_256_params_s; }
 template<> inline const struct decaf_kparams_s *SHA3<384>::get_params() { return  &DECAF_SHA3_384_params_s; }
 template<> inline const struct decaf_kparams_s *SHA3<512>::get_params() { return  &DECAF_SHA3_512_params_s; }
+#endif
 /** @endcond */
   
 } /* namespace decaf */

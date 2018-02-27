@@ -15,6 +15,10 @@
 #ifndef __DECAF_EDDSA_HXX__
 #define __DECAF_EDDSA_HXX__ 1
 
+#ifdef _MSC_VER
+#undef PURE // BECAUSE VISUAL STUDIO IS HORSE SHIT AND SOMEHOW INCLUDES combaseapi.h WITHOUT ASKING
+#endif
+
 /** Namespace for all libdecaf C++ objects. */
 namespace decaf {
     /** How signatures handle hashing. */

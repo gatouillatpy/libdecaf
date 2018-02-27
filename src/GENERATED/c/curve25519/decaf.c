@@ -1487,13 +1487,13 @@ prepare_wnaf_table(
 
 extern const gf API_NS(precomputed_wnaf_as_fe)[];
 static const niels_t *API_NS(wnaf_base) = (const niels_t *)API_NS(precomputed_wnaf_as_fe);
-const size_t API_NS(sizeof_precomputed_wnafs) __attribute((visibility("hidden")))
+const size_t API_NS(sizeof_precomputed_wnafs)
     = sizeof(niels_t)<<DECAF_WNAF_FIXED_TABLE_BITS;
 
 void API_NS(precompute_wnafs) (
     niels_t out[1<<DECAF_WNAF_FIXED_TABLE_BITS],
     const point_t base
-) __attribute__ ((visibility ("hidden")));
+);
 
 void API_NS(precompute_wnafs) (
     niels_t out[1<<DECAF_WNAF_FIXED_TABLE_BITS],

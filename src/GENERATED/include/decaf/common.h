@@ -25,13 +25,31 @@ extern "C" {
 #define __attribute__(x)
 #define NOINLINE
 #endif
+#ifdef _MSC_VER
+#define DECAF_API_VIS
+#define DECAF_NOINLINE /* __declspec(noinline) */
+#define DECAF_WARN_UNUSED
+#define DECAF_NONNULL
+#define DECAF_NONNULL1
+#define DECAF_NONNULL12
+#define DECAF_NONNULL123
+#define DECAF_NONNULL1234
+#define DECAF_INLINE inline
+#else
 #define DECAF_API_VIS __attribute__((visibility("default")))
 #define DECAF_NOINLINE  __attribute__((noinline))
 #define DECAF_WARN_UNUSED __attribute__((warn_unused_result))
 #define DECAF_NONNULL __attribute__((nonnull))
+#define DECAF_NONNULL1 __attribute__((nonnull(1)))
+#define DECAF_NONNULL12 __attribute__((nonnull(1,2)))
+#define DECAF_NONNULL123 __attribute__((nonnull(1,2,3)))
+#define DECAF_NONNULL1234 __attribute__((nonnull(1,2,3,4)))
 #define DECAF_INLINE inline __attribute__((always_inline,unused))
+#endif
 // Cribbed from libnotmuch
-#if defined (__clang_major__) && __clang_major__ >= 3 \
+#if defined (_MSC_VER)
+#define DECAF_DEPRECATED(msg)
+#elif defined (__clang_major__) && __clang_major__ >= 3 \
     || defined (__GNUC__) && __GNUC__ >= 5 \
     || defined (__GNUC__) && __GNUC__ == 4 && __GNUC_MINOR__ >= 5
 #define DECAF_DEPRECATED(msg) __attribute__ ((deprecated(msg)))
@@ -72,7 +90,13 @@ typedef int64_t decaf_dsword_t;     /**< Signed double-word size for internal co
 #endif
     
 /** DECAF_TRUE = -1 so that DECAF_TRUE & x = x */
+#ifdef _MSC_VER
+#pragma warning(disable: 4146)
 static const decaf_bool_t DECAF_TRUE = -(decaf_bool_t)1;
+#pragma warning(default: 4146)
+#else
+static const decaf_bool_t DECAF_TRUE = -(decaf_bool_t)1;
+#endif
 
 /** DECAF_FALSE = 0 so that DECAF_FALSE & x = 0 */
 static const decaf_bool_t DECAF_FALSE = 0;

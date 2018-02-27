@@ -32,9 +32,15 @@ extern "C" {
 #ifndef __DECAF_25519_GF_DEFINED__
 #define __DECAF_25519_GF_DEFINED__ 1
 /** @brief Galois field element internal structure */
+#ifdef _MSC_VER
+typedef struct gf_25519_s {
+    decaf_word_t limb[320/DECAF_WORD_BITS];
+} __declspec(align(32)) gf_25519_s, gf_25519_t[1];
+#else
 typedef struct gf_25519_s {
     decaf_word_t limb[320/DECAF_WORD_BITS];
 } __attribute__((aligned(32))) gf_25519_s, gf_25519_t[1];
+#endif
 #endif /* __DECAF_25519_GF_DEFINED__ */
 /** @endcond */
 

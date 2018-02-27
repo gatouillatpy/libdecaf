@@ -77,7 +77,7 @@ void decaf_ed$(gf_shortname)_sign (
     uint8_t prehashed,
     const uint8_t *context,
     uint8_t context_len
-) DECAF_API_VIS __attribute__((nonnull(1,2,3))) DECAF_NOINLINE;
+) DECAF_API_VIS DECAF_NONNULL123 DECAF_NOINLINE;
 
 /**
  * @brief EdDSA signing with prehash.
@@ -101,7 +101,7 @@ void decaf_ed$(gf_shortname)_sign_prehash (
     const decaf_ed$(gf_shortname)_prehash_ctx_t hash,
     const uint8_t *context,
     uint8_t context_len
-) DECAF_API_VIS __attribute__((nonnull(1,2,3,4))) DECAF_NOINLINE;
+) DECAF_API_VIS DECAF_NONNULL1234 DECAF_NOINLINE;
     
 /**
  * @brief Prehash initialization, with contexts if supported.
@@ -110,7 +110,7 @@ void decaf_ed$(gf_shortname)_sign_prehash (
  */
 void decaf_ed$(gf_shortname)_prehash_init (
     decaf_ed$(gf_shortname)_prehash_ctx_t hash
-) DECAF_API_VIS __attribute__((nonnull(1))) DECAF_NOINLINE;
+) DECAF_API_VIS DECAF_NONNULL1 DECAF_NOINLINE;
 
 /**
  * @brief EdDSA signature verification.
@@ -138,7 +138,7 @@ decaf_error_t decaf_ed$(gf_shortname)_verify (
     uint8_t prehashed,
     const uint8_t *context,
     uint8_t context_len
-) DECAF_API_VIS __attribute__((nonnull(1,2))) DECAF_NOINLINE;
+) DECAF_API_VIS DECAF_NONNULL12 DECAF_NOINLINE;
 
 /**
  * @brief EdDSA signature verification.
@@ -162,7 +162,7 @@ decaf_error_t decaf_ed$(gf_shortname)_verify_prehash (
     const decaf_ed$(gf_shortname)_prehash_ctx_t hash,
     const uint8_t *context,
     uint8_t context_len
-) DECAF_API_VIS __attribute__((nonnull(1,2))) DECAF_NOINLINE;
+) DECAF_API_VIS DECAF_NONNULL12 DECAF_NOINLINE;
 
 /**
  * @brief EdDSA point encoding.  Used internally, exposed externally.

@@ -122,7 +122,13 @@ public:
 
     /** Assign from signed int. */
     inline Scalar& operator=(int64_t w) DECAF_NOEXCEPT {
+#ifdef _MSC_VER
+#pragma warning(disable: 4146)
         Scalar t(-(uint64_t)INT_MIN);
+#pragma warning(default: 4146)
+#else
+        Scalar t(-(uint64_t)INT_MIN);
+#endif
         $(c_ns)_scalar_set_unsigned(s,(uint64_t)w - (uint64_t)INT_MIN);
         *this -= t;
         return *this;
@@ -305,7 +311,7 @@ public:
     */
     inline explicit Point(const FixedBlock<SER_BYTES> &buffer, bool allow_identity=true)
         /*throw(CryptoException)*/ {
-        if (DECAF_SUCCESS != decode(buffer,allow_identity ? DECAF_TRUE : DECAF_FALSE)) {
+        if (DECAF_SUCCESS != decode(buffer,allow_identity)) {
             throw CryptoException();
         }
     }
@@ -462,7 +468,7 @@ public:
     inline Point &operator/=(const Scalar &s) /*throw(CryptoException)*/ { return (*this) *= s.inverse(); }
 
     /** Validate / sanity check */
-    inline bool validate() const DECAF_NOEXCEPT { return $(c_ns)_point_valid(p); }
+    inline bool validate() const DECAF_NOEXCEPT { return $(c_ns)_point_valid(p) == DECAF_TRUE; }
 
     /** Double-scalar multiply, equivalent to q*qs + r*rs but faster. */
     static inline Point double_scalarmul (

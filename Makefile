@@ -243,9 +243,9 @@ endef
 
 ################################################################
 # call code above to generate curves and fields
-$(eval $(call define_field,p25519,arch_x86_64))
+$(eval $(call define_field,p25519,arch_32))
 $(eval $(call define_curve,curve25519,p25519,255))
-$(eval $(call define_field,p448,arch_x86_64))
+$(eval $(call define_field,p448,arch_32))
 $(eval $(call define_curve,ed448goldilocks,p448,448))
 
 # The shakesum utility is in the public bin directory.

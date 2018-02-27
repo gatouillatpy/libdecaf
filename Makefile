@@ -98,31 +98,31 @@ scan: clean
 # Internal test programs, which are not part of the final build/bin directory.
 $(BUILD_IBIN)/test: $(BUILD_OBJ)/test_decaf.o lib
 ifeq ($(UNAME),Darwin)
-	$(LDXX) $(LDFLAGS) -o $@ $< -L$(BUILD_LIB) -ldecaf
+	$(LDXX) $(LDFLAGS) -o $@ $< -L$(BUILD_LIB) -l:libdecaf.a
 else
-	$(LDXX) $(LDFLAGS) -Wl,-rpath,`pwd`/$(BUILD_LIB) -o $@ $< -L$(BUILD_LIB) -ldecaf
+	$(LDXX) $(LDFLAGS) -Wl,-rpath,`pwd`/$(BUILD_LIB) -o $@ $< -L$(BUILD_LIB) -l:libdecaf.a
 endif
 
 $(BUILD_BIN)/ristretto: $(BUILD_OBJ)/ristretto.o lib
 ifeq ($(UNAME),Darwin)
-	$(LDXX) $(LDFLAGS) -o $@ $< -L$(BUILD_LIB) -ldecaf
+	$(LDXX) $(LDFLAGS) -o $@ $< -L$(BUILD_LIB) -l:libdecaf.a
 else
-	$(LDXX) $(LDFLAGS) -Wl,-rpath,`pwd`/$(BUILD_LIB) -o $@ $< -L$(BUILD_LIB) -ldecaf
+	$(LDXX) $(LDFLAGS) -Wl,-rpath,`pwd`/$(BUILD_LIB) -o $@ $< -L$(BUILD_LIB) -l:libdecaf.a
 endif
 
 # Internal test programs, which are not part of the final build/bin directory.
 $(BUILD_IBIN)/test_ct: $(BUILD_OBJ)/test_ct.o lib
 ifeq ($(UNAME),Darwin)
-	$(LDXX) $(LDFLAGS) -o $@ $< -L$(BUILD_LIB) -ldecaf
+	$(LDXX) $(LDFLAGS) -o $@ $< -L$(BUILD_LIB) -l:libdecaf.a
 else
-	$(LDXX) $(LDFLAGS) -Wl,-rpath,`pwd`/$(BUILD_LIB) -o $@ $< -L$(BUILD_LIB) -ldecaf
+	$(LDXX) $(LDFLAGS) -Wl,-rpath,`pwd`/$(BUILD_LIB) -o $@ $< -L$(BUILD_LIB) -l:libdecaf.a
 endif
 
 $(BUILD_IBIN)/bench: $(BUILD_OBJ)/bench_decaf.o lib
 ifeq ($(UNAME),Darwin)
-	$(LDXX) $(LDFLAGS) -o $@ $< -L$(BUILD_LIB) -ldecaf
+	$(LDXX) $(LDFLAGS) -o $@ $< -L$(BUILD_LIB) -l:libdecaf.a
 else
-	$(LDXX) $(LDFLAGS) -Wl,-rpath,`pwd`/$(BUILD_LIB) -o $@ $< -L$(BUILD_LIB) -ldecaf
+	$(LDXX) $(LDFLAGS) -Wl,-rpath,`pwd`/$(BUILD_LIB) -o $@ $< -L$(BUILD_LIB) -l:libdecaf.a
 endif
 
 # Create all the build subdirectories
@@ -253,24 +253,11 @@ $(BUILD_BIN)/shakesum: $(BUILD_OBJ)/shakesum.o $(BUILD_OBJ)/shake.o $(BUILD_OBJ)
 	$(LD) $(LDFLAGS) -o $@ $^
 
 # The main decaf library, and its symlinks.
-lib: $(BUILD_LIB)/libdecaf.so
+lib: $(BUILD_LIB)/libdecaf.a
 
-$(BUILD_LIB)/libdecaf.so: $(BUILD_LIB)/libdecaf.so.1
-	ln -sf `basename $^` $@
-
-$(BUILD_LIB)/libdecaf.so.1: $(LIBCOMPONENTS)
+$(BUILD_LIB)/libdecaf.a: $(LIBCOMPONENTS)
 	rm -f $@
-ifeq ($(UNAME),Darwin)
-	libtool -macosx_version_min $(MACOSX_VERSION_MIN) -dynamic -dead_strip -lc -x -o $@ \
-		  $(LIBCOMPONENTS)
-else ifeq ($(UNAME),SunOS)
-	$(LD) $(LDFLAGS) -shared -Wl,-soname,`basename $@` -o $@ $(LIBCOMPONENTS)
-	strip --discard-all $@
-else
-	$(LD) $(LDFLAGS) -shared -Wl,-soname,`basename $@` -Wl,--gc-sections -o $@ $(LIBCOMPONENTS)
-	strip --discard-all $@
-endif
-
+	ar rcs $@ $(LIBCOMPONENTS)
 
 $(BUILD_OBJ)/%.o: src/%.c $(HEADERS)
 	$(CC) $(CFLAGS) -c -o $@ $<

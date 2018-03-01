@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\GENERATED\c\decaf\crypto.hxx" />
+    <ClInclude Include="src\GENERATED\c\p25519\f_field.h" />
+    <ClInclude Include="src\GENERATED\c\p448\f_field.h" />
+    <ClInclude Include="src\GENERATED\include\decaf.h" />
+    <ClInclude Include="src\GENERATED\include\decaf.hxx" />
+    <ClInclude Include="src\GENERATED\include\decaf\common.h" />
+    <ClInclude Include="src\GENERATED\include\decaf\ed255.h" />
+    <ClInclude Include="src\GENERATED\include\decaf\ed255.hxx" />
+    <ClInclude Include="src\GENERATED\include\decaf\ed448.h" />
+    <ClInclude Include="src\GENERATED\include\decaf\ed448.hxx" />
+    <ClInclude Include="src\GENERATED\include\decaf\eddsa.hxx" />
+    <ClInclude Include="src\GENERATED\include\decaf\point_255.h" />
+    <ClInclude Include="src\GENERATED\include\decaf\point_255.hxx" />
+    <ClInclude Include="src\GENERATED\include\decaf\point_448.h" />
+    <ClInclude Include="src\GENERATED\include\decaf\point_448.hxx" />
+    <ClInclude Include="src\GENERATED\include\decaf\secure_buffer.hxx" />
+    <ClInclude Include="src\GENERATED\include\decaf\sha512.h" />
+    <ClInclude Include="src\GENERATED\include\decaf\sha512.hxx" />
+    <ClInclude Include="src\GENERATED\include\decaf\shake.h" />
+    <ClInclude Include="src\GENERATED\include\decaf\shake.hxx" />
+    <ClInclude Include="src\GENERATED\include\decaf\spongerng.h" />
+    <ClInclude Include="src\GENERATED\include\decaf\spongerng.hxx" />
+    <ClInclude Include="src\p25519\arch_32\f_impl.h" />
+    <ClInclude Include="src\p448\arch_32\f_impl.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\sha512.c" />
+    <ClCompile Include="src\shake.c" />
+    <ClCompile Include="src\spongerng.c" />
+    <ClCompile Include="src\utils.c" />
+    <ClCompile Include="src\p25519\f_arithmetic.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)p25519\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="src\p25519\arch_32\f_impl.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)p25519\arch_32\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\p25519\f_generic.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;$(ProjectDir)src\p25519\arch_32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)p25519\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\curve25519\decaf.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)curve25519\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\curve25519\decaf_gen_tables.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)curve25519\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\curve25519\decaf_tables.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)curve25519\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\curve25519\eddsa.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)curve25519\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\curve25519\elligator.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)curve25519\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\curve25519\scalar.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)curve25519\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="src\p448\f_arithmetic.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)p448\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="src\p448\arch_32\f_impl.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)p448\arch_32\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\p448\f_generic.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;$(ProjectDir)src\p448\arch_32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)p448\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\ed448goldilocks\decaf.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)ed448goldilocks\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\ed448goldilocks\decaf_gen_tables.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)ed448goldilocks\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\ed448goldilocks\decaf_tables.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)ed448goldilocks\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\ed448goldilocks\eddsa.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)ed448goldilocks\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\ed448goldilocks\elligator.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)ed448goldilocks\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\ed448goldilocks\scalar.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)ed448goldilocks\</ObjectFileName>
+    </ClCompile>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{5D7A23EF-09DE-4C75-8ED1-F783BAACFC7E}</ProjectGuid>
+    <RootNamespace>libdecaf</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)dist\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>libdecafd</TargetName>
+    <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)src\GENERATED\include</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(ProjectDir)dist\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>libdecafd</TargetName>
+    <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)src\GENERATED\include</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)dist\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>libdecaf</TargetName>
+    <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)src\GENERATED\include</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(ProjectDir)dist\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>libdecaf</TargetName>
+    <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)src\GENERATED\include</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;__builtin_bswap32=_byteswap_ulong;__builtin_bswap64=_byteswap_uint64;asm=__asm__;__i386__;_WIN32_WINNT=0x0502;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ProgramDataBaseFileName>$(OutDir)\lib\x86\$(TargetName).pdb</ProgramDataBaseFileName>
+      <ForcedIncludeFiles>%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <MinimalRebuild>false</MinimalRebuild>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)\lib\x86\$(TargetName)$(TargetExt)</OutputFile>
+      <TargetMachine>MachineX86</TargetMachine>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir)\lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <CustomBuildStep>
+      <Message>Custom Clean Step</Message>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;__builtin_bswap32=_byteswap_ulong;__builtin_bswap64=_byteswap_uint64;asm=__asm__;__x86_64__;_WIN32_WINNT=0x0600;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_x86_64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ProgramDataBaseFileName>$(OutDir)\lib\x64\$(TargetName).pdb</ProgramDataBaseFileName>
+      <ForcedIncludeFiles>%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <MinimalRebuild>false</MinimalRebuild>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)\lib\x64\$(TargetName)$(TargetExt)</OutputFile>
+      <TargetMachine>MachineX64</TargetMachine>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir)\lib\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <CustomBuildStep>
+      <Message>Custom Clean Step</Message>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <OmitFramePointers>true</OmitFramePointers>
+      <StringPooling>true</StringPooling>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;__builtin_bswap32=_byteswap_ulong;__builtin_bswap64=_byteswap_uint64;asm=__asm__;__i386__;_WIN32_WINNT=0x0502;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <InterproceduralOptimization>SingleFile</InterproceduralOptimization>
+      <ProgramDataBaseFileName>$(OutDir)\lib\x86\$(TargetName).pdb</ProgramDataBaseFileName>
+      <ForcedIncludeFiles>%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)\lib\x86\$(TargetName)$(TargetExt)</OutputFile>
+      <TargetMachine>MachineX86</TargetMachine>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir)\lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <CustomBuildStep>
+      <Message>Custom Clean Step</Message>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <OmitFramePointers>true</OmitFramePointers>
+      <StringPooling>true</StringPooling>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;__builtin_bswap32=_byteswap_ulong;__builtin_bswap64=_byteswap_uint64;asm=__asm__;__x86_64__;_WIN32_WINNT=0x0600;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\include;$(ProjectDir)src\include\arch_x86_64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <InterproceduralOptimization>SingleFile</InterproceduralOptimization>
+      <ProgramDataBaseFileName>$(OutDir)\lib\x64\$(TargetName).pdb</ProgramDataBaseFileName>
+      <ForcedIncludeFiles>%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)\lib\x64\$(TargetName)$(TargetExt)</OutputFile>
+      <TargetMachine>MachineX64</TargetMachine>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir)\lib\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <CustomBuildStep>
+      <Message>Custom Clean Step</Message>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

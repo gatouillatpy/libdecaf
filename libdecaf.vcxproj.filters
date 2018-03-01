@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{e850f24d-093f-4c30-a99c-413a7dfa71b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{bdd0568e-d423-4fcc-affe-6ba0c2a40f78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\decaf">
+      <UniqueIdentifier>{44324959-36e0-424b-a6fc-2b1a177aaa00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\curve25519">
+      <UniqueIdentifier>{f2f1c92d-3c70-4950-b72d-91bceb98676a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\decaf">
+      <UniqueIdentifier>{ff7f286c-9e3e-4209-b840-5f7e83d3a9fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ed448goldilocks">
+      <UniqueIdentifier>{ee0cfcc4-4222-4acd-92ca-48fcff38b043}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\p448">
+      <UniqueIdentifier>{43ca310d-ddc0-4293-8539-548b27f81182}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\p25519">
+      <UniqueIdentifier>{2412a840-1632-46d4-9343-72865f490989}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common">
+      <UniqueIdentifier>{0afd1a1e-8863-4b5e-b286-3086122f9b4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\p25519\arch_32">
+      <UniqueIdentifier>{1cd3415d-9ef2-4758-92f1-1508cd84aefc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\p448\arch_32">
+      <UniqueIdentifier>{62c0f794-fa0f-408f-a10e-45b74d709562}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\GENERATED\include\decaf.hxx">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\common.h">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\ed255.h">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\ed255.hxx">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\ed448.h">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\ed448.hxx">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\eddsa.hxx">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\point_255.h">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\point_255.hxx">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\point_448.h">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\point_448.hxx">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\secure_buffer.hxx">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\sha512.h">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\sha512.hxx">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\shake.h">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\shake.hxx">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\spongerng.h">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\spongerng.hxx">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\c\p25519\f_field.h">
+      <Filter>Source Files\p25519</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\c\p448\f_field.h">
+      <Filter>Source Files\p448</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\c\decaf\crypto.hxx">
+      <Filter>Source Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\p448\arch_32\f_impl.h">
+      <Filter>Source Files\p448\arch_32</Filter>
+    </ClInclude>
+    <ClInclude Include="src\p25519\arch_32\f_impl.h">
+      <Filter>Source Files\p25519\arch_32</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\GENERATED\c\p25519\f_generic.c">
+      <Filter>Source Files\p25519</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\p448\f_generic.c">
+      <Filter>Source Files\p448</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\ed448goldilocks\decaf.c">
+      <Filter>Source Files\ed448goldilocks</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\ed448goldilocks\decaf_gen_tables.c">
+      <Filter>Source Files\ed448goldilocks</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\ed448goldilocks\decaf_tables.c">
+      <Filter>Source Files\ed448goldilocks</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\ed448goldilocks\eddsa.c">
+      <Filter>Source Files\ed448goldilocks</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\ed448goldilocks\elligator.c">
+      <Filter>Source Files\ed448goldilocks</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\ed448goldilocks\scalar.c">
+      <Filter>Source Files\ed448goldilocks</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\curve25519\decaf.c">
+      <Filter>Source Files\curve25519</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\curve25519\decaf_gen_tables.c">
+      <Filter>Source Files\curve25519</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\curve25519\decaf_tables.c">
+      <Filter>Source Files\curve25519</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\curve25519\eddsa.c">
+      <Filter>Source Files\curve25519</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\curve25519\elligator.c">
+      <Filter>Source Files\curve25519</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\curve25519\scalar.c">
+      <Filter>Source Files\curve25519</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sha512.c">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shake.c">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\spongerng.c">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils.c">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\p448\arch_32\f_impl.c">
+      <Filter>Source Files\p448\arch_32</Filter>
+    </ClCompile>
+    <ClCompile Include="src\p25519\arch_32\f_impl.c">
+      <Filter>Source Files\p25519\arch_32</Filter>
+    </ClCompile>
+    <ClCompile Include="src\p448\f_arithmetic.c">
+      <Filter>Source Files\p448</Filter>
+    </ClCompile>
+    <ClCompile Include="src\p25519\f_arithmetic.c">
+      <Filter>Source Files\p25519</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -90,13 +90,7 @@ typedef int64_t decaf_dsword_t;     /**< Signed double-word size for internal co
 #endif
     
 /** DECAF_TRUE = -1 so that DECAF_TRUE & x = x */
-#ifdef _MSC_VER
-#pragma warning(disable: 4146)
 static const decaf_bool_t DECAF_TRUE = -(decaf_bool_t)1;
-#pragma warning(default: 4146)
-#else
-static const decaf_bool_t DECAF_TRUE = -(decaf_bool_t)1;
-#endif
 
 /** DECAF_FALSE = 0 so that DECAF_FALSE & x = 0 */
 static const decaf_bool_t DECAF_FALSE = 0;

@@ -2,9 +2,11 @@
  * Released under the MIT License.  See LICENSE.txt for license information.
  */
 
+#ifdef __i386__
+
 #include "f_field.h"
 
-void gf_mul (gf_s *__restrict__ cs, const gf as, const gf bs) {
+void gf_mul (gf_s* DECAF_RESTRICT cs, const gf as, const gf bs) {
     const uint32_t *a = as->limb, *b = bs->limb, maske = ((1<<26)-1), masko = ((1<<25)-1);
     
     uint32_t bh[9];
@@ -48,10 +50,10 @@ void gf_mul (gf_s *__restrict__ cs, const gf as, const gf bs) {
     accum >>= 26;
     
     assert(accum < masko);
-    c[1] += accum;
+    c[1] += (uint32_t)accum;
 }
 
-void gf_mulw_unsigned (gf_s *__restrict__ cs, const gf as, uint32_t b) {
+void gf_mulw_unsigned (gf_s* DECAF_RESTRICT cs, const gf as, uint32_t b) {
     const uint32_t *a = as->limb, maske = ((1<<26)-1), masko = ((1<<25)-1);
     uint32_t *c = cs->limb;
     uint64_t accum = widemul(b, a[0]);
@@ -80,11 +82,11 @@ void gf_mulw_unsigned (gf_s *__restrict__ cs, const gf as, uint32_t b) {
     accum >>= 26;
     
     assert(accum < masko);
-    c[1] += accum;
+    c[1] += (uint32_t)accum;
 }
 
-void gf_sqr (gf_s *__restrict__ cs, const gf as) {
+void gf_sqr (gf_s* DECAF_RESTRICT cs, const gf as) {
     gf_mul(cs,as,as); /* Performs better with dedicated square */
 }
 
-
+#endif // __i386__

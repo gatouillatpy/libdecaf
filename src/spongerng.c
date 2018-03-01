@@ -22,15 +22,25 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#if _MSC_VER
+#include <intrin.h>
+#else
 #include <unistd.h>
-
+#endif
 /** Get entropy from a CPU, preferably in the form of RDRAND, but possibly instead from RDTSC. */
 static void get_cpu_entropy(uint8_t *entropy, size_t len) {
 # if (defined(__i386__) || defined(__x86_64__))
     static char tested = 0, have_rdrand = 0;
     if (!tested) {
         uint32_t a,b,c,d;
-#if defined(__i386__) && defined(__PIC__)
+#if _MSC_VER
+		int cpuInfo[4];
+		__cpuid(cpuInfo, 0);
+		a = cpuInfo[0];
+		b = cpuInfo[1];
+		c = cpuInfo[2];
+		d = cpuInfo[3];
+#elif defined(__i386__) && defined(__PIC__)
         /* Don't clobber ebx.  The compiler doesn't like when when __PIC__ */
         __asm__("mov %%ebx, %[not_ebx]\n\t"
                 "cpuid\n\t"
@@ -61,7 +71,11 @@ static void get_cpu_entropy(uint8_t *entropy, size_t len) {
         uint32_t tries;
         for (tries = 100+len; tries && len; len--, eo++) {
             for (a = 0; tries && !a; tries--) {
+#if _MSC_VER
+                if (_rdrand32_step(&out) == 1) break;
+#else
                 __asm__ __volatile__ ("rdrand %0\n\tsetc %%al" : "=r"(out), "+a"(a) :: "cc" );
+#endif
             }
             *eo ^= out;
         }
@@ -69,7 +83,9 @@ static void get_cpu_entropy(uint8_t *entropy, size_t len) {
 #ifndef __has_builtin
 #define __has_builtin(X) 0
 #endif
-#if defined(__clang__) && __has_builtin(__builtin_readcyclecounter)
+#if _MSC_VER
+        *(uint64_t*) entropy = __rdtsc();
+#elif defined(__clang__) && __has_builtin(__builtin_readcyclecounter)
         *(uint64_t*) entropy ^= __builtin_readcyclecounter();
 #elif defined(__x86_64__)
         uint32_t lobits, hibits;
@@ -90,7 +106,7 @@ static void get_cpu_entropy(uint8_t *entropy, size_t len) {
 
 void decaf_spongerng_next (
     decaf_keccak_prng_t prng,
-    uint8_t * __restrict__ out,
+    uint8_t * DECAF_RESTRICT out,
     size_t len
 ) {
     if (prng->sponge->params->remaining) {
@@ -104,7 +120,7 @@ void decaf_spongerng_next (
     uint8_t lenx[8];
     size_t len1 = len;
     for (unsigned i=0; i<sizeof(lenx); i++) {
-        lenx[i] = len1;
+        lenx[i] = (uint8_t)len1;
         len1 >>= 8;
     }
     decaf_sha3_update(prng->sponge,lenx,sizeof(lenx));
@@ -116,7 +132,7 @@ void decaf_spongerng_next (
 
 void decaf_spongerng_stir (
     decaf_keccak_prng_t prng,
-    const uint8_t * __restrict__ in,
+    const uint8_t * DECAF_RESTRICT in,
     size_t len
 ) {
     uint8_t seed[32];
@@ -133,7 +149,7 @@ void decaf_spongerng_stir (
 
 void decaf_spongerng_init_from_buffer (
     decaf_keccak_prng_t prng,
-    const uint8_t * __restrict__ in,
+    const uint8_t * DECAF_RESTRICT in,
     size_t len,
     int deterministic
 ) {
@@ -157,7 +173,7 @@ decaf_error_t decaf_spongerng_init_from_file (
     
     uint8_t buffer[128];
     while (len) {
-        ssize_t red = read(fd, buffer, (len > sizeof(buffer)) ? sizeof(buffer) : len);
+        size_t red = read(fd, buffer, (len > sizeof(buffer)) ? sizeof(buffer) : len);
         if (red <= 0) {
             close(fd);
             return DECAF_FAILURE;

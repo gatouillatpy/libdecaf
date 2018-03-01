@@ -81,7 +81,7 @@ smull2 (
 #endif
 }
 
-void gf_mul (gf_s *__restrict__ cs, const gf as, const gf bs) {
+void gf_mul (gf_s* DECAF_RESTRICT cs, const gf as, const gf bs) {
     
     const uint32_t *a = as->limb, *b = bs->limb;
     uint32_t *c = cs->limb;
@@ -427,7 +427,7 @@ void gf_mul (gf_s *__restrict__ cs, const gf as, const gf bs) {
     c[1] += ((uint32_t)(accum1));
 }
 
-void gf_sqr (gf_s *__restrict__ cs, const gf as) {
+void gf_sqr (gf_s* DECAF_RESTRICT cs, const gf as) {
     const uint32_t *a = as->limb;
     uint32_t *c = cs->limb;
 
@@ -722,7 +722,7 @@ void gf_sqr (gf_s *__restrict__ cs, const gf as) {
 }
 
 void gf_mulw_unsigned (
-    gf_s *__restrict__ cs,
+    gf_s* DECAF_RESTRICT cs,
     const gf as,
     uint32_t b
 ) {

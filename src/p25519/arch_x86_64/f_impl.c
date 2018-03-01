@@ -2,10 +2,12 @@
  * Released under the MIT License.  See LICENSE.txt for license information.
  */
 
+#ifdef __x86_64__
+
 #include "f_field.h"
 
 /** Requires: input limbs < 9*2^51 */
-void gf_mul (gf_s *__restrict__ cs, const gf as, const gf bs) {
+void gf_mul (gf_s* DECAF_RESTRICT cs, const gf as, const gf bs) {
     const uint64_t *a = as->limb, *b = bs->limb, mask = ((1ull<<51)-1);
     uint64_t *c = cs->limb;
     
@@ -81,7 +83,7 @@ void gf_mul (gf_s *__restrict__ cs, const gf as, const gf bs) {
     c[1] = c1 + (accum1>>51);
 }
 
-void gf_sqr (gf_s *__restrict__ cs, const gf as) {
+void gf_sqr (gf_s* DECAF_RESTRICT cs, const gf as) {
     const uint64_t *a = as->limb, mask = ((1ull<<51)-1);
     uint64_t *c = cs->limb;
     
@@ -140,7 +142,7 @@ void gf_sqr (gf_s *__restrict__ cs, const gf as) {
     c[1] = c1 + (accum1>>51);
 }
 
-void gf_mulw_unsigned (gf_s *__restrict__ cs, const gf as, uint32_t b) {
+void gf_mulw_unsigned (gf_s* DECAF_RESTRICT cs, const gf as, uint32_t b) {
     const uint64_t *a = as->limb, mask = ((1ull<<51)-1);
     uint64_t *c = cs->limb;
 
@@ -169,3 +171,5 @@ void gf_mulw_unsigned (gf_s *__restrict__ cs, const gf as, uint32_t b) {
     c[0] = a1 & mask;
     c[1] = c1 + (a1>>51);
 }
+
+#endif // __x86_64__

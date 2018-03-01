@@ -2,9 +2,11 @@
  * Released under the MIT License.  See LICENSE.txt for license information.
  */
 
+#ifdef __x86_64__
+
 #include "f_field.h"
 
-void gf_mul (gf_s *__restrict__ cs, const gf as, const gf bs) {
+void gf_mul (gf_s* DECAF_RESTRICT cs, const gf as, const gf bs) {
     const uint64_t *a = as->limb, *b = bs->limb;
     uint64_t *c = cs->limb;
 
@@ -139,7 +141,7 @@ void gf_mul (gf_s *__restrict__ cs, const gf as, const gf bs) {
     c[0] += ((uint64_t)(accum1));
 }
 
-void gf_mulw_unsigned (gf_s *__restrict__ cs, const gf as, uint32_t b) {
+void gf_mulw_unsigned (gf_s* DECAF_RESTRICT cs, const gf as, uint32_t b) {
     const uint64_t *a = as->limb;
     uint64_t *c = cs->limb;
 
@@ -179,7 +181,7 @@ void gf_mulw_unsigned (gf_s *__restrict__ cs, const gf as, uint32_t b) {
     c[1] += accum4 >> 56;
 }
 
-void gf_sqr (gf_s *__restrict__ cs, const gf as) {
+void gf_sqr (gf_s* DECAF_RESTRICT cs, const gf as) {
     const uint64_t *a = as->limb;
     uint64_t *c = cs->limb;
 
@@ -289,3 +291,5 @@ void gf_sqr (gf_s *__restrict__ cs, const gf as) {
     c[4] += ((uint64_t)(accum0)) + ((uint64_t)(accum1));
     c[0] += ((uint64_t)(accum1));
 }
+
+#endif // __x86_64__

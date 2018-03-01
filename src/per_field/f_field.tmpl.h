@@ -62,9 +62,9 @@ static INLINE_UNUSED void gf_weak_reduce (gf inout);
 void gf_strong_reduce (gf inout);   
 void gf_add (gf out, const gf a, const gf b);
 void gf_sub (gf out, const gf a, const gf b);
-void gf_mul (gf_s *__restrict__ out, const gf a, const gf b);
-void gf_mulw_unsigned (gf_s *__restrict__ out, const gf a, uint32_t b);
-void gf_sqr (gf_s *__restrict__ out, const gf a);
+void gf_mul (gf_s* DECAF_RESTRICT out, const gf a, const gf b);
+void gf_mulw_unsigned (gf_s* DECAF_RESTRICT out, const gf a, uint32_t b);
+void gf_sqr (gf_s* DECAF_RESTRICT out, const gf a);
 mask_t gf_isr(gf a, const gf x); /** a^2 x = 1, QNR, or 0 if x=0.  Return true if successful */
 mask_t gf_eq (const gf x, const gf y);
 mask_t gf_lobit (const gf x);

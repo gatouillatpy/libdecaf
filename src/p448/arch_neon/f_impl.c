@@ -58,7 +58,7 @@ smull2 (
     *acc = (int64_t)(int32_t)a * (int64_t)(int32_t)b * 2;
 }
 
-void gf_mul (gf_s *__restrict__ cs, const gf as, const gf bs) {
+void gf_mul (gf_s* DECAF_RESTRICT cs, const gf as, const gf bs) {
     #define _bl0 "q0"
     #define _bl0_0 "d0"
     #define _bl0_1 "d1"
@@ -352,7 +352,7 @@ void gf_mul (gf_s *__restrict__ cs, const gf as, const gf bs) {
     );
 }
 
-void gf_sqr (gf_s *__restrict__ cs, const gf bs) {
+void gf_sqr (gf_s* DECAF_RESTRICT cs, const gf bs) {
     int32x2_t *vc = (int32x2_t*) cs->limb;
 
     __asm__ __volatile__ (
@@ -549,7 +549,7 @@ void gf_sqr (gf_s *__restrict__ cs, const gf bs) {
     );
 }
 
-void gf_mulw_unsigned (gf_s *__restrict__ cs, const gf as, uint32_t b) { 
+void gf_mulw_unsigned (gf_s* DECAF_RESTRICT cs, const gf as, uint32_t b) { 
     uint32x2_t vmask = {(1<<28) - 1, (1<<28)-1};
     assert(b<(1<<28));
     

@@ -122,13 +122,7 @@ public:
 
     /** Assign from signed int. */
     inline Scalar& operator=(int64_t w) DECAF_NOEXCEPT {
-#ifdef _MSC_VER
-#pragma warning(disable: 4146)
         Scalar t(-(uint64_t)INT_MIN);
-#pragma warning(default: 4146)
-#else
-        Scalar t(-(uint64_t)INT_MIN);
-#endif
         $(c_ns)_scalar_set_unsigned(s,(uint64_t)w - (uint64_t)INT_MIN);
         *this -= t;
         return *this;

@@ -116,9 +116,9 @@ const point_t API_NS(point_identity) = {{{{{0}}},{{{1}}},{{{1}}},{{{0}}}}};
 
 /* Predeclare because not static: called by elligator */
 void API_NS(deisogenize) (
-    gf_s *__restrict__ s,
-    gf_s *__restrict__ inv_el_sum,
-    gf_s *__restrict__ inv_el_m1,
+    gf_s* DECAF_RESTRICT s,
+    gf_s* DECAF_RESTRICT inv_el_sum,
+    gf_s* DECAF_RESTRICT inv_el_m1,
     const point_t p,
     mask_t toggle_s,
     mask_t toggle_altx,
@@ -126,9 +126,9 @@ void API_NS(deisogenize) (
 );
 
 void API_NS(deisogenize) (
-    gf_s *__restrict__ s,
-    gf_s *__restrict__ inv_el_sum,
-    gf_s *__restrict__ inv_el_m1,
+    gf_s* DECAF_RESTRICT s,
+    gf_s* DECAF_RESTRICT inv_el_sum,
+    gf_s* DECAF_RESTRICT inv_el_m1,
     const point_t p,
     mask_t toggle_s,
     mask_t toggle_altx,
@@ -829,7 +829,7 @@ void API_NS(point_debugging_pscale) (
 }
 
 static void gf_batch_invert (
-    gf *__restrict__ out,
+    gf* DECAF_RESTRICT out,
     const gf *in,
     unsigned int n
 ) {
@@ -856,7 +856,7 @@ static void gf_batch_invert (
 static void batch_normalize_niels (
     niels_t *table,
     const gf *zs,
-    gf *__restrict__ zis,
+    gf* DECAF_RESTRICT zis,
     int n
 ) {
     int i;
@@ -947,7 +947,7 @@ void API_NS(precompute) (
 
 static DECAF_INLINE void
 constant_time_lookup_niels (
-    niels_s *__restrict__ ni,
+    niels_s* DECAF_RESTRICT ni,
     const niels_t *table,
     int nelts,
     int idx

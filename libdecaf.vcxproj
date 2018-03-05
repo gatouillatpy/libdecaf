@@ -42,9 +42,7 @@
     <ClInclude Include="src\GENERATED\include\decaf\spongerng.h" />
     <ClInclude Include="src\GENERATED\include\decaf\spongerng.hxx" />
     <ClInclude Include="src\p25519\arch_32\f_impl.h" />
-    <ClInclude Include="src\p25519\arch_x86_64\f_impl.h" />
     <ClInclude Include="src\p448\arch_32\f_impl.h" />
-    <ClInclude Include="src\p448\arch_x86_64\f_impl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\sha512.c" />
@@ -52,99 +50,75 @@
     <ClCompile Include="src\spongerng.c" />
     <ClCompile Include="src\utils.c" />
     <ClCompile Include="src\p25519\f_arithmetic.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">.\;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">.\;$(ProjectDir)src\p25519\arch_x86_64;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)p25519\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="src\p25519\arch_32\f_impl.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">.\;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)p25519\arch_32\</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="src\p25519\arch_x86_64\f_impl.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">.\;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <ObjectFileName>$(IntDir)p25519\arch_x86_64\</ObjectFileName>
-    </ClCompile>
     <ClCompile Include="src\GENERATED\c\p25519\f_generic.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">.\;$(ProjectDir)src\p25519\arch_32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">.\;$(ProjectDir)src\p25519\arch_x86_64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\p25519\arch_32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)p25519\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="src\GENERATED\c\curve25519\decaf.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">.\;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">.\;$(ProjectDir)src\p25519\arch_x86_64;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)curve25519\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="src\GENERATED\c\curve25519\decaf_gen_tables.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">.\;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">.\;$(ProjectDir)src\p25519\arch_x86_64;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)curve25519\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="src\GENERATED\c\curve25519\decaf_tables.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">.\;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">.\;$(ProjectDir)src\p25519\arch_x86_64;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)curve25519\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="src\GENERATED\c\curve25519\eddsa.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">.\;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">.\;$(ProjectDir)src\p25519\arch_x86_64;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)curve25519\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="src\GENERATED\c\curve25519\elligator.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">.\;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">.\;$(ProjectDir)src\p25519\arch_x86_64;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)curve25519\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="src\GENERATED\c\curve25519\scalar.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">.\;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">.\;$(ProjectDir)src\p25519\arch_x86_64;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\p25519\arch_32;$(ProjectDir)src\GENERATED\c\p25519;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)curve25519\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="src\p448\f_arithmetic.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">.\;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">.\;$(ProjectDir)src\p448\arch_x86_64;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)p448\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="src\p448\arch_32\f_impl.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">.\;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)p448\arch_32\</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="src\p448\arch_x86_64\f_impl.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">.\;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <ObjectFileName>$(IntDir)p448\arch_x86_64\</ObjectFileName>
-    </ClCompile>
     <ClCompile Include="src\GENERATED\c\p448\f_generic.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">.\;$(ProjectDir)src\p448\arch_32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">.\;$(ProjectDir)src\p448\arch_x86_64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\p448\arch_32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)p448\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="src\GENERATED\c\ed448goldilocks\decaf.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">.\;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">.\;$(ProjectDir)src\p448\arch_x86_64;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)ed448goldilocks\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="src\GENERATED\c\ed448goldilocks\decaf_gen_tables.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">.\;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">.\;$(ProjectDir)src\p448\arch_x86_64;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)ed448goldilocks\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="src\GENERATED\c\ed448goldilocks\decaf_tables.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">.\;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">.\;$(ProjectDir)src\p448\arch_x86_64;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)ed448goldilocks\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="src\GENERATED\c\ed448goldilocks\eddsa.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">.\;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">.\;$(ProjectDir)src\p448\arch_x86_64;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)ed448goldilocks\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="src\GENERATED\c\ed448goldilocks\elligator.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">.\;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">.\;$(ProjectDir)src\p448\arch_x86_64;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)ed448goldilocks\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="src\GENERATED\c\ed448goldilocks\scalar.c">
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='Win32'">.\;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Platform)'=='x64'">.\;$(ProjectDir)src\p448\arch_x86_64;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;$(ProjectDir)src\p448\arch_32;$(ProjectDir)src\GENERATED\c\p448;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)ed448goldilocks\</ObjectFileName>
     </ClCompile>
   </ItemGroup>
@@ -214,7 +188,7 @@
     <IntDir>$(SolutionDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <TargetName>libdecafd</TargetName>
     <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)src\include;$(ProjectDir)src\GENERATED\include;$(ProjectDir)src\include\arch_x86_64</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)src\include;$(ProjectDir)src\GENERATED\include;$(ProjectDir)src\include\arch_32</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(ProjectDir)dist\</OutDir>
@@ -228,14 +202,14 @@
     <IntDir>$(SolutionDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <TargetName>libdecaf</TargetName>
     <CustomBuildAfterTargets>Clean</CustomBuildAfterTargets>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)src\include;$(ProjectDir)src\GENERATED\include;$(ProjectDir)src\include\arch_x86_64</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)src\include;$(ProjectDir)src\GENERATED\include;$(ProjectDir)src\include\arch_32</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>HAVE_CONFIG_H;__builtin_bswap32=_byteswap_ulong;__builtin_bswap64=_byteswap_uint64;asm=__asm__;__i386__;_WIN32_WINNT=0x0502;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;__i386__;_WIN32_WINNT=0x0502;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4146;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)\lib\x86\$(TargetName).pdb</ProgramDataBaseFileName>
@@ -261,7 +235,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>HAVE_CONFIG_H;__builtin_bswap32=_byteswap_ulong;__builtin_bswap64=_byteswap_uint64;asm=__asm__;__x86_64__;_WIN32_WINNT=0x0600;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;__i386__;_WIN32_WINNT=0x0502;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4146;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)\lib\x64\$(TargetName).pdb</ProgramDataBaseFileName>
@@ -294,7 +268,7 @@
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <OmitFramePointers>true</OmitFramePointers>
       <StringPooling>true</StringPooling>
-      <PreprocessorDefinitions>HAVE_CONFIG_H;__builtin_bswap32=_byteswap_ulong;__builtin_bswap64=_byteswap_uint64;asm=__asm__;__i386__;_WIN32_WINNT=0x0502;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;__i386__;_WIN32_WINNT=0x0502;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4146;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <InterproceduralOptimization>SingleFile</InterproceduralOptimization>
@@ -329,7 +303,7 @@
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <OmitFramePointers>true</OmitFramePointers>
       <StringPooling>true</StringPooling>
-      <PreprocessorDefinitions>HAVE_CONFIG_H;__builtin_bswap32=_byteswap_ulong;__builtin_bswap64=_byteswap_uint64;asm=__asm__;__x86_64__;_WIN32_WINNT=0x0600;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;__i386__;_WIN32_WINNT=0x0600;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4146;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <InterproceduralOptimization>SingleFile</InterproceduralOptimization>

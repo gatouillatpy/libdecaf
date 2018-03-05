@@ -34,12 +34,6 @@
     <Filter Include="Source Files\p448\arch_32">
       <UniqueIdentifier>{62c0f794-fa0f-408f-a10e-45b74d709562}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\p448\arch_x86_64">
-      <UniqueIdentifier>{e01ecd86-7110-40c0-99d9-378043d2d14d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\p25519\arch_x86_64">
-      <UniqueIdentifier>{5fb9c53b-bf0b-421a-9e00-e23fe5fc2b07}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GENERATED\include\decaf.hxx">
@@ -114,12 +108,6 @@
     <ClInclude Include="src\p25519\arch_32\f_impl.h">
       <Filter>Source Files\p25519\arch_32</Filter>
     </ClInclude>
-    <ClInclude Include="src\p448\arch_x86_64\f_impl.h">
-      <Filter>Source Files\p448\arch_x86_64</Filter>
-    </ClInclude>
-    <ClInclude Include="src\p25519\arch_x86_64\f_impl.h">
-      <Filter>Source Files\p25519\arch_x86_64</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GENERATED\c\p25519\f_generic.c">
@@ -187,12 +175,6 @@
     </ClCompile>
     <ClCompile Include="src\p25519\f_arithmetic.c">
       <Filter>Source Files\p25519</Filter>
-    </ClCompile>
-    <ClCompile Include="src\p448\arch_x86_64\f_impl.c">
-      <Filter>Source Files\p448\arch_x86_64</Filter>
-    </ClCompile>
-    <ClCompile Include="src\p25519\arch_x86_64\f_impl.c">
-      <Filter>Source Files\p25519\arch_x86_64</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -20,7 +20,7 @@ extern "C" {
 #ifdef _MSC_VER
 typedef struct gf_$(gf_shortname)_s {
     decaf_word_t limb[$(gf_impl_bits)/DECAF_WORD_BITS];
-} __declspec(align(32)) gf_$(gf_shortname)_s, gf_$(gf_shortname)_t[1];
+} /*__declspec(align(32))*/ gf_$(gf_shortname)_s, gf_$(gf_shortname)_t[1];
 #else
 typedef struct gf_$(gf_shortname)_s {
     decaf_word_t limb[$(gf_impl_bits)/DECAF_WORD_BITS];

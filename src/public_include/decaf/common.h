@@ -66,7 +66,7 @@ extern "C" {
  * with eg arch_neon, you might end up linking a library built with arch_arm32.
  */
 #ifndef DECAF_WORD_BITS
-    #if (defined(__ILP64__) || defined(__amd64__) || defined(__x86_64__) || (((__UINT_FAST32_MAX__)>>30)>>30))
+    #if (defined(__ILP64__) || defined(__amd64__) || defined(__x86_64__) || (((__UINT_FAST32_MAX__)>>30)>>30)) && !_MSC_VER // Visual Studio does not support non standard 128-bit integer types.
         #define DECAF_WORD_BITS 64 /**< The number of bits in a word */
     #else
         #define DECAF_WORD_BITS 32 /**< The number of bits in a word */
@@ -88,7 +88,13 @@ typedef int64_t decaf_dsword_t;     /**< Signed double-word size for internal co
 #else
 #error "Only supporting DECAF_WORD_BITS = 32 or 64 for now"
 #endif
-    
+
+#ifdef _MSC_VER
+#define DECAF_RESTRICT __restrict
+#else
+#define DECAF_RESTRICT __restrict__
+#endif
+
 /** DECAF_TRUE = -1 so that DECAF_TRUE & x = x */
 static const decaf_bool_t DECAF_TRUE = -(decaf_bool_t)1;
 

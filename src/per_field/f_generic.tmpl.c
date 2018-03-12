@@ -27,7 +27,7 @@ void gf_serialize (uint8_t serial[SER_BYTES], const gf x, int with_hibit) {
             fill += LIMB_PLACE_VALUE(LIMBPERM(j));
             j++;
         }
-        serial[i] = buffer;
+        serial[i] = (uint8_t)buffer;
         fill -= 8;
         buffer >>= 8;
     }
@@ -63,7 +63,7 @@ mask_t gf_deserialize (gf x, const uint8_t serial[SER_BYTES], int with_hibit, ui
             fill += 8;
             j++;
         }
-        x->limb[LIMBPERM(i)] = (i<NLIMBS-1) ? buffer & LIMB_MASK(LIMBPERM(i)) : buffer;
+        x->limb[LIMBPERM(i)] = (word_t)((i<NLIMBS-1) ? buffer & LIMB_MASK(LIMBPERM(i)) : buffer);
         fill -= LIMB_PLACE_VALUE(LIMBPERM(i));
         buffer >>= LIMB_PLACE_VALUE(LIMBPERM(i));
         scarry = (scarry + x->limb[LIMBPERM(i)] - MODULUS->limb[LIMBPERM(i)]) >> (8*sizeof(word_t));

@@ -22,7 +22,9 @@
 #	define le64toh(x) LE_64(x)
 #elif defined(_WIN16) || defined(_WIN32) || defined(_WIN64) || defined(__WINDOWS__)
 #	include <winsock2.h>
+#ifndef _MSC_VER
 #	include <sys/param.h>
+#endif
 #	if BYTE_ORDER == LITTLE_ENDIAN
 #		define htole64(x) (x)
 #		define le64toh(x) (x)

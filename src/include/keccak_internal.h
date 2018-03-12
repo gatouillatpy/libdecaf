@@ -28,7 +28,11 @@ typedef struct decaf_keccak_sponge_s {
 
 #define INTERNAL_SPONGE_STRUCT 1
 
+#if _MSC_VER
+void keccakf(kdomain_t state, uint8_t start_round);
+#else
 void __attribute__((noinline)) keccakf(kdomain_t state, uint8_t start_round);
+#endif
 
 static inline void dokeccak (decaf_keccak_sponge_t decaf_sponge) {
     keccakf(decaf_sponge->state, decaf_sponge->params->start_round);

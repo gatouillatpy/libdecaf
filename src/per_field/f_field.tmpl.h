@@ -12,7 +12,11 @@
 #define SER_BYTES $(((gf_bits-2)//8 + 1))
 typedef struct gf_$(gf_shortname)_s {
     word_t limb[NLIMBS];
+#ifdef _MSC_VER
+} /*__declspec(align(32))*/ gf_$(gf_shortname)_s, gf_$(gf_shortname)_t[1];
+#else
 } __attribute__((aligned(32))) gf_$(gf_shortname)_s, gf_$(gf_shortname)_t[1];
+#endif
 
 #define GF_LIT_LIMB_BITS  $(gf_lit_limb_bits)
 #define GF_BITS           $(gf_bits)
@@ -46,7 +50,11 @@ typedef struct gf_$(gf_shortname)_s {
 
 #define SQRT_MINUS_ONE    P$(gf_shortname)_SQRT_MINUS_ONE /* might not be defined */
 
+#ifdef _MSC_VER
+#define INLINE_UNUSED inline
+#else
 #define INLINE_UNUSED __inline__ __attribute__((unused,always_inline))
+#endif
 
 #ifdef __cplusplus
 extern "C" {

@@ -40,14 +40,22 @@
  */
 typedef struct {
     big_register_t unaligned;
+#if _MSC_VER
+} unaligned_br_t
+#else
 } __attribute__((packed)) unaligned_br_t;
+#endif
 
 /**
  * Unaligned word register, for architectures where that matters.
  */
 typedef struct {
     word_t unaligned;
+#if _MSC_VER
+} unaligned_word_t
+#else
 } __attribute__((packed)) unaligned_word_t;
+#endif
 
 /**
  * @brief Constant-time conditional swap.
@@ -57,11 +65,15 @@ typedef struct {
  * *a and *b must not alias.  Also, they must be at least as aligned
  * as their sizes, if the CPU cares about that sort of thing.
  */
+#if _MSC_VER
+static inline void
+#else
 static __inline__ void
 __attribute__((unused,always_inline))
+#endif
 constant_time_cond_swap (
-    void *__restrict__ a_,
-    void *__restrict__ b_,
+    void* DECAF_RESTRICT a_,
+    void* DECAF_RESTRICT b_,
     word_t elem_bytes,
     mask_t doswap
 ) {
@@ -130,10 +142,14 @@ constant_time_cond_swap (
  *
  * The table and output must not alias.
  */
+#if _MSC_VER
+static inline void
+#else
 static __inline__ void
 __attribute__((unused,always_inline))
+#endif
 constant_time_lookup (
-    void *__restrict__ out_,
+    void* DECAF_RESTRICT out_,
     const void *table_,
     word_t elem_bytes,
     word_t n_table,
@@ -189,10 +205,14 @@ constant_time_lookup (
  *
  * The table and input must not alias.
  */
+#if _MSC_VER
+static inline void
+#else
 static __inline__ void
 __attribute__((unused,always_inline))
+#endif
 constant_time_insert (
-    void *__restrict__ table_,
+    void* DECAF_RESTRICT table_,
     const void *in_,
     word_t elem_bytes,
     word_t n_table,
@@ -253,8 +273,12 @@ constant_time_insert (
  *
  * The input and output must be at least as aligned as elem_bytes.
  */
+#if _MSC_VER
+static inline void
+#else
 static __inline__ void
 __attribute__((unused,always_inline))
+#endif
 constant_time_mask (
     void * a_,
     const void *b_,
@@ -301,11 +325,15 @@ constant_time_mask (
  * The input and output must be at least as aligned as alignment_bytes
  * or their size, whichever is smaller.
  *
- * Note that the output is not __restrict__, but if it overlaps either
+ * Note that the output is not DECAF_RESTRICT, but if it overlaps either
  * input, it must be equal and not partially overlap.
  */
+#if _MSC_VER
+static inline void
+#else
 static __inline__ void
 __attribute__((unused,always_inline))
+#endif
 constant_time_select (
     void *a_,
     const void *bFalse_,

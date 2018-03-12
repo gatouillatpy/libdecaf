@@ -82,6 +82,18 @@ extern int posix_memalign(void **, size_t, size_t);
     typedef uint32_t uint32x8_t __attribute__((ext_vector_type(8)));
     typedef int32_t  int32x8_t __attribute__((ext_vector_type(8)));
     typedef word_t vecmask_t __attribute__((ext_vector_type(4)));
+#elif _MSC_VER
+	typedef uint64_t uint64x2_t[2];
+	typedef int64_t  int64x2_t[2];
+	typedef uint64_t uint64x4_t[4];
+	typedef int64_t  int64x4_t[4];
+	typedef uint32_t uint32x4_t[4];
+	typedef int32_t  int32x4_t[4];
+	typedef uint32_t uint32x2_t[2];
+	typedef int32_t  int32x2_t[2];
+	typedef uint32_t uint32x8_t[8];
+	typedef int32_t  int32x8_t[8];
+	typedef word_t vecmask_t[16];
 #else /* GCC, hopefully? */
     typedef uint64_t uint64x2_t __attribute__((vector_size(16)));
     typedef int64_t  int64x2_t __attribute__((vector_size(16)));
@@ -130,7 +142,7 @@ extern int posix_memalign(void **, size_t, size_t);
     br_set_to_mask(mask_t x) {
         return vdupq_n_u32(x);
     }
-#elif _WIN64 || __amd64__ || __X86_64__ || __aarch64__
+#elif (_WIN64 || __amd64__ || __X86_64__ || __aarch64__) && !_MSC_VER
     #define VECTOR_ALIGNED __attribute__((aligned(8)))
     typedef uint64_t big_register_t, uint64xn_t;
 
@@ -140,7 +152,11 @@ extern int posix_memalign(void **, size_t, size_t);
         return (big_register_t)x;
     }
 #else
+#if _MSC_VER
+    #define VECTOR_ALIGNED __declspec(align(4))
+#else
     #define VECTOR_ALIGNED __attribute__((aligned(4)))
+#endif
     typedef uint64_t uint64xn_t;
     typedef uint32_t uint32xn_t;
     typedef uint32_t big_register_t;
@@ -151,13 +167,29 @@ extern int posix_memalign(void **, size_t, size_t);
     }
 #endif
 
+#if _MSC_VER
+#pragma pack(push, 1)
+typedef struct {
+    uint64xn_t unaligned;
+} unaligned_uint64xn_t;
+#pragma pack(pop)
+#else
 typedef struct {
     uint64xn_t unaligned;
 } __attribute__((packed)) unaligned_uint64xn_t;
+#endif
 
+#if _MSC_VER
+#pragma pack(push, 1)
+typedef struct {
+    uint32xn_t unaligned;
+} unaligned_uint32xn_t;
+#pragma pack(pop)
+#else
 typedef struct {
     uint32xn_t unaligned;
 } __attribute__((packed)) unaligned_uint32xn_t;
+#endif
 
 #if __AVX2__
     static DECAF_INLINE big_register_t
@@ -224,6 +256,9 @@ typedef struct {
  */
 static DECAF_INLINE void *
 malloc_vector(size_t size) {
+#if _MSC_VER
+    return _aligned_malloc(size, sizeof(big_register_t));
+#else
     void *out = NULL;
     
     int ret = posix_memalign(&out, sizeof(big_register_t), size);
@@ -233,6 +268,7 @@ malloc_vector(size_t size) {
     } else {
         return out;
     }
+#endif
 }
 
 /* PERF: vectorize vs unroll */

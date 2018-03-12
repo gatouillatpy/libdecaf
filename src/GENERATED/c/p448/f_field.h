@@ -27,7 +27,11 @@
 #define SER_BYTES 56
 typedef struct gf_448_s {
     word_t limb[NLIMBS];
+#ifdef _MSC_VER
+} /*__declspec(align(32))*/ gf_448_s, gf_448_t[1];
+#else
 } __attribute__((aligned(32))) gf_448_s, gf_448_t[1];
+#endif
 
 #define GF_LIT_LIMB_BITS  56
 #define GF_BITS           448
@@ -61,7 +65,11 @@ typedef struct gf_448_s {
 
 #define SQRT_MINUS_ONE    P448_SQRT_MINUS_ONE /* might not be defined */
 
+#ifdef _MSC_VER
+#define INLINE_UNUSED inline
+#else
 #define INLINE_UNUSED __inline__ __attribute__((unused,always_inline))
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -77,9 +85,9 @@ static INLINE_UNUSED void gf_weak_reduce (gf inout);
 void gf_strong_reduce (gf inout);   
 void gf_add (gf out, const gf a, const gf b);
 void gf_sub (gf out, const gf a, const gf b);
-void gf_mul (gf_s *__restrict__ out, const gf a, const gf b);
-void gf_mulw_unsigned (gf_s *__restrict__ out, const gf a, uint32_t b);
-void gf_sqr (gf_s *__restrict__ out, const gf a);
+void gf_mul (gf_s* DECAF_RESTRICT out, const gf a, const gf b);
+void gf_mulw_unsigned (gf_s* DECAF_RESTRICT out, const gf a, uint32_t b);
+void gf_sqr (gf_s* DECAF_RESTRICT out, const gf a);
 mask_t gf_isr(gf a, const gf x); /** a^2 x = 1, QNR, or 0 if x=0.  Return true if successful */
 mask_t gf_eq (const gf x, const gf y);
 mask_t gf_lobit (const gf x);

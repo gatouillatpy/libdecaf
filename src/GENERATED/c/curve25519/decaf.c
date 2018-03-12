@@ -127,9 +127,9 @@ const point_t API_NS(point_identity) = {{{{{0}}},{{{1}}},{{{1}}},{{{0}}}}};
 
 /* Predeclare because not static: called by elligator */
 void API_NS(deisogenize) (
-    gf_s *__restrict__ s,
-    gf_s *__restrict__ inv_el_sum,
-    gf_s *__restrict__ inv_el_m1,
+    gf_s* DECAF_RESTRICT s,
+    gf_s* DECAF_RESTRICT inv_el_sum,
+    gf_s* DECAF_RESTRICT inv_el_m1,
     const point_t p,
     mask_t toggle_s,
     mask_t toggle_altx,
@@ -137,9 +137,9 @@ void API_NS(deisogenize) (
 );
 
 void API_NS(deisogenize) (
-    gf_s *__restrict__ s,
-    gf_s *__restrict__ inv_el_sum,
-    gf_s *__restrict__ inv_el_m1,
+    gf_s* DECAF_RESTRICT s,
+    gf_s* DECAF_RESTRICT inv_el_sum,
+    gf_s* DECAF_RESTRICT inv_el_m1,
     const point_t p,
     mask_t toggle_s,
     mask_t toggle_altx,
@@ -520,16 +520,16 @@ prepare_fixed_window(
     decaf_bzero(tmp,sizeof(tmp));
 }
 
+#define WINDOW (DECAF_WINDOW_BITS)
+#define WINDOW_MASK ((1 << WINDOW) - 1)
+#define WINDOW_T_MASK (WINDOW_MASK >> 1)
+#define NTABLE (1 << (WINDOW - 1))
+
 void API_NS(point_scalarmul) (
     point_t a,
     const point_t b,
     const scalar_t scalar
 ) {
-    const int WINDOW = DECAF_WINDOW_BITS,
-        WINDOW_MASK = (1<<WINDOW)-1,
-        WINDOW_T_MASK = WINDOW_MASK >> 1,
-        NTABLE = 1<<(WINDOW-1);
-        
     scalar_t scalar1x;
     API_NS(scalar_add)(scalar1x, scalar, point_scalarmul_adjustment);
     API_NS(scalar_halve)(scalar1x,scalar1x);
@@ -587,11 +587,6 @@ void API_NS(point_double_scalarmul) (
     const point_t c,
     const scalar_t scalarc
 ) {
-    const int WINDOW = DECAF_WINDOW_BITS,
-        WINDOW_MASK = (1<<WINDOW)-1,
-        WINDOW_T_MASK = WINDOW_MASK >> 1,
-        NTABLE = 1<<(WINDOW-1);
-        
     scalar_t scalar1x, scalar2x;
     API_NS(scalar_add)(scalar1x, scalarb, point_scalarmul_adjustment);
     API_NS(scalar_halve)(scalar1x,scalar1x);
@@ -663,11 +658,6 @@ void API_NS(point_dual_scalarmul) (
     const scalar_t scalar1,
     const scalar_t scalar2
 ) {
-    const int WINDOW = DECAF_WINDOW_BITS,
-        WINDOW_MASK = (1<<WINDOW)-1,
-        WINDOW_T_MASK = WINDOW_MASK >> 1,
-        NTABLE = 1<<(WINDOW-1);
-        
     scalar_t scalar1x, scalar2x;
     API_NS(scalar_add)(scalar1x, scalar1, point_scalarmul_adjustment);
     API_NS(scalar_halve)(scalar1x,scalar1x);
@@ -840,7 +830,7 @@ void API_NS(point_debugging_pscale) (
 }
 
 static void gf_batch_invert (
-    gf *__restrict__ out,
+    gf* DECAF_RESTRICT out,
     const gf *in,
     unsigned int n
 ) {
@@ -867,7 +857,7 @@ static void gf_batch_invert (
 static void batch_normalize_niels (
     niels_t *table,
     const gf *zs,
-    gf *__restrict__ zis,
+    gf* DECAF_RESTRICT zis,
     int n
 ) {
     int i;
@@ -895,44 +885,43 @@ void API_NS(precompute) (
     precomputed_s *table,
     const point_t base
 ) { 
-    const unsigned int n = COMBS_N, t = COMBS_T, s = COMBS_S;
-    assert(n*t*s >= SCALAR_BITS);
+    assert(COMBS_N*COMBS_T*COMBS_S >= SCALAR_BITS);
   
-    point_t working, start, doubles[t-1];
+    point_t working, start, doubles[COMBS_T-1];
     API_NS(point_copy)(working, base);
     pniels_t pn_tmp;
   
-    gf zs[n<<(t-1)], zis[n<<(t-1)];
+    gf zs[COMBS_N<<(COMBS_T-1)], zis[COMBS_N<<(COMBS_T-1)];
   
     unsigned int i,j,k;
     
-    /* Compute n tables */
-    for (i=0; i<n; i++) {
+    /* Compute COMBS_N tables */
+    for (i=0; i<COMBS_N; i++) {
 
         /* Doubling phase */
-        for (j=0; j<t; j++) {
+        for (j=0; j<COMBS_T; j++) {
             if (j) API_NS(point_add)(start, start, working);
             else API_NS(point_copy)(start, working);
 
-            if (j==t-1 && i==n-1) break;
+            if (j==COMBS_T-1 && i==COMBS_N-1) break;
 
             point_double_internal(working, working,0);
-            if (j<t-1) API_NS(point_copy)(doubles[j], working);
+            if (j<COMBS_T-1) API_NS(point_copy)(doubles[j], working);
 
-            for (k=0; k<s-1; k++)
-                point_double_internal(working, working, k<s-2);
+            for (k=0; k<COMBS_S-1; k++)
+                point_double_internal(working, working, k<COMBS_S-2);
         }
 
         /* Gray-code phase */
         for (j=0;; j++) {
             int gray = j ^ (j>>1);
-            int idx = (((i+1)<<(t-1))-1) ^ gray;
+            int idx = (((i+1)<<(COMBS_T-1))-1) ^ gray;
 
             pt_to_pniels(pn_tmp, start);
             memcpy(table->table[idx], pn_tmp->n, sizeof(pn_tmp->n));
             gf_copy(zs[idx], pn_tmp->z);
 			
-            if (j >= (1u<<(t-1)) - 1) break;
+            if (j >= (1u<<(COMBS_T-1)) - 1) break;
             int delta = (j+1) ^ ((j+1)>>1) ^ gray;
 
             for (k=0; delta>1; k++)
@@ -946,7 +935,7 @@ void API_NS(precompute) (
         }
     }
     
-    batch_normalize_niels(table->table,(const gf *)zs,zis,n<<(t-1));
+    batch_normalize_niels(table->table,(const gf *)zs,zis,COMBS_N<<(COMBS_T-1));
     
     decaf_bzero(zs,sizeof(zs));
     decaf_bzero(zis,sizeof(zis));
@@ -958,7 +947,7 @@ void API_NS(precompute) (
 
 static DECAF_INLINE void
 constant_time_lookup_niels (
-    niels_s *__restrict__ ni,
+    niels_s* DECAF_RESTRICT ni,
     const niels_t *table,
     int nelts,
     int idx
@@ -973,7 +962,6 @@ void API_NS(precomputed_scalarmul) (
 ) {
     int i;
     unsigned j,k;
-    const unsigned int n = COMBS_N, t = COMBS_T, s = COMBS_S;
     
     scalar_t scalar1x;
     API_NS(scalar_add)(scalar1x, scalar, precomputed_scalarmul_adjustment);
@@ -981,28 +969,28 @@ void API_NS(precomputed_scalarmul) (
     
     niels_t ni;
     
-    for (i=s-1; i>=0; i--) {
-        if (i != (int)s-1) point_double_internal(out,out,0);
+    for (i=COMBS_S-1; i>=0; i--) {
+        if (i != (int)COMBS_S-1) point_double_internal(out,out,0);
         
-        for (j=0; j<n; j++) {
+        for (j=0; j<COMBS_N; j++) {
             int tab = 0;
          
-            for (k=0; k<t; k++) {
-                unsigned int bit = i + s*(k + j*t);
+            for (k=0; k<COMBS_T; k++) {
+                unsigned int bit = i + COMBS_S*(k + j*COMBS_T);
                 if (bit < SCALAR_BITS) {
                     tab |= (scalar1x->limb[bit/WBITS] >> (bit%WBITS) & 1) << k;
                 }
             }
             
-            mask_t invert = (tab>>(t-1))-1;
+            mask_t invert = (tab>>(COMBS_T-1))-1;
             tab ^= invert;
-            tab &= (1<<(t-1)) - 1;
+            tab &= (1<<(COMBS_T-1)) - 1;
 
-            constant_time_lookup_niels(ni, &table->table[j<<(t-1)], 1<<(t-1), tab);
+            constant_time_lookup_niels(ni, &table->table[j<<(COMBS_T-1)], 1<<(COMBS_T-1), tab);
 
             cond_neg_niels(ni, invert);
-            if ((i!=(int)s-1)||j) {
-                add_niels_to_pt(out, ni, j==n-1 && i);
+            if ((i!=(int)COMBS_S-1)||j) {
+                add_niels_to_pt(out, ni, j==COMBS_N-1 && i);
             } else {
                 niels_to_pt(out, ni);
             }
@@ -1405,6 +1393,18 @@ struct smvt_control {
   int power, addend;
 };
 
+#ifdef _MSC_VER
+static inline int __builtin_ctz(unsigned int x) {
+    DWORD r = 0;
+    if (_BitScanForward(&r, x)) {
+        return r;
+    } else {
+        return 32; // This is undefined, I better choose 32 than 0
+    }
+    return r;
+}
+#endif
+
 static int recode_wnaf (
     struct smvt_control *control, /* [nbits/(table_bits+1) + 3] */
     const scalar_t scalar,
@@ -1520,16 +1520,14 @@ void API_NS(base_double_scalarmul_non_secret) (
     const point_t base2,
     const scalar_t scalar2
 ) {
-    const int table_bits_var = DECAF_WNAF_VAR_TABLE_BITS,
-        table_bits_pre = DECAF_WNAF_FIXED_TABLE_BITS;
-    struct smvt_control control_var[SCALAR_BITS/(table_bits_var+1)+3];
-    struct smvt_control control_pre[SCALAR_BITS/(table_bits_pre+1)+3];
+    struct smvt_control control_var[SCALAR_BITS/(DECAF_WNAF_VAR_TABLE_BITS+1)+3];
+    struct smvt_control control_pre[SCALAR_BITS/(DECAF_WNAF_FIXED_TABLE_BITS+1)+3];
     
-    int ncb_pre = recode_wnaf(control_pre, scalar1, table_bits_pre);
-    int ncb_var = recode_wnaf(control_var, scalar2, table_bits_var);
+    int ncb_pre = recode_wnaf(control_pre, scalar1, DECAF_WNAF_FIXED_TABLE_BITS);
+    int ncb_var = recode_wnaf(control_var, scalar2, DECAF_WNAF_VAR_TABLE_BITS);
   
-    pniels_t precmp_var[1<<table_bits_var];
-    prepare_wnaf_table(precmp_var, base2, table_bits_var);
+    pniels_t precmp_var[1<<DECAF_WNAF_VAR_TABLE_BITS];
+    prepare_wnaf_table(precmp_var, base2, DECAF_WNAF_VAR_TABLE_BITS);
   
     int contp=0, contv=0, i = control_var[0].power;
 

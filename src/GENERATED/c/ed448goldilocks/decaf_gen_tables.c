@@ -69,7 +69,11 @@ int main(int argc, char **argv) {
     }
     
     API_NS(precomputed_s) *pre;
+#ifdef _MSC_VER
+    pre = _aligned_malloc(API_NS(sizeof_precomputed_s), API_NS(alignof_precomputed_s));
+#else
     ret = posix_memalign((void**)&pre, API_NS(alignof_precomputed_s), API_NS(sizeof_precomputed_s));
+#endif
     if (ret || !pre) {
         fprintf(stderr, "Can't allocate space for precomputed table\n");
         return 1;
@@ -77,7 +81,11 @@ int main(int argc, char **argv) {
     API_NS(precompute)(pre, real_point_base);
     
     struct niels_s *pre_wnaf;
+#ifdef _MSC_VER
+    pre_wnaf = _aligned_malloc(API_NS(sizeof_precomputed_wnafs), API_NS(alignof_precomputed_s));
+#else
     ret = posix_memalign((void**)&pre_wnaf, API_NS(alignof_precomputed_s), API_NS(sizeof_precomputed_wnafs));
+#endif
     if (ret || !pre_wnaf) {
         fprintf(stderr, "Can't allocate space for precomputed WNAF table\n");
         return 1;
@@ -101,9 +109,8 @@ int main(int argc, char **argv) {
     printf("\n}};\n");
     
     output = (const gf_s *)pre;
-    printf("const gf API_NS(precomputed_base_as_fe)[%d]\n", 
+    printf("const VECTOR_ALIGNED gf API_NS(precomputed_base_as_fe)[%d] = {\n", 
         (int)(API_NS(sizeof_precomputed_s) / sizeof(gf)));
-    printf("VECTOR_ALIGNED = {\n");
     
     for (i=0; i < API_NS(sizeof_precomputed_s); i+=sizeof(gf)) {
         if (i) printf(",\n  ");
@@ -112,9 +119,8 @@ int main(int argc, char **argv) {
     printf("\n};\n");
     
     output = (const gf_s *)pre_wnaf;
-    printf("const gf API_NS(precomputed_wnaf_as_fe)[%d]\n", 
+    printf("const VECTOR_ALIGNED gf API_NS(precomputed_wnaf_as_fe)[%d] = {\n", 
         (int)(API_NS(sizeof_precomputed_wnafs) / sizeof(gf)));
-    printf("VECTOR_ALIGNED = {\n");
     for (i=0; i < API_NS(sizeof_precomputed_wnafs); i+=sizeof(gf)) {
         if (i) printf(",\n  ");
         field_print(output++);

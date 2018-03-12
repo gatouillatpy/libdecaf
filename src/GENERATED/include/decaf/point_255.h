@@ -35,7 +35,7 @@ extern "C" {
 #ifdef _MSC_VER
 typedef struct gf_25519_s {
     decaf_word_t limb[320/DECAF_WORD_BITS];
-} __declspec(align(32)) gf_25519_s, gf_25519_t[1];
+} /*__declspec(align(32))*/ gf_25519_s, gf_25519_t[1];
 #else
 typedef struct gf_25519_s {
     decaf_word_t limb[320/DECAF_WORD_BITS];

@@ -138,6 +138,15 @@ void decaf_ed448_derive_public_key (
     decaf_bzero(secret_scalar_ser, sizeof(secret_scalar_ser));
 }
 
+#ifdef _MSC_VER
+#pragma pack(push,1)
+typedef struct {
+    uint8_t secret_scalar_ser[DECAF_EDDSA_448_PRIVATE_BYTES];
+    uint8_t seed[DECAF_EDDSA_448_PRIVATE_BYTES];
+} expanded_t;
+#pragma pack(pop)
+#endif
+
 void decaf_ed448_sign (
     uint8_t signature[DECAF_EDDSA_448_SIGNATURE_BYTES],
     const uint8_t privkey[DECAF_EDDSA_448_PRIVATE_BYTES],
@@ -152,17 +161,21 @@ void decaf_ed448_sign (
     hash_ctx_t hash;
     {
         /* Schedule the secret key */
+#ifdef _MSC_VER
+        expanded_t expanded;
+#else
         struct {
             uint8_t secret_scalar_ser[DECAF_EDDSA_448_PRIVATE_BYTES];
             uint8_t seed[DECAF_EDDSA_448_PRIVATE_BYTES];
         } __attribute__((packed)) expanded;
+#endif
         hash_hash(
             (uint8_t *)&expanded,
             sizeof(expanded),
             privkey,
             DECAF_EDDSA_448_PRIVATE_BYTES
         );
-        clamp(expanded.secret_scalar_ser);   
+        clamp(expanded.secret_scalar_ser);
         API_NS(scalar_decode_long)(secret_scalar, expanded.secret_scalar_ser, sizeof(expanded.secret_scalar_ser));
     
         /* Hash to create the nonce */

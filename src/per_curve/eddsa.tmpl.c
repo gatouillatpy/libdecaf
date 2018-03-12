@@ -132,8 +132,8 @@ void decaf_ed$(gf_shortname)_derive_public_key (
 #ifdef _MSC_VER
 #pragma pack(push,1)
 typedef struct {
-    uint8_t secret_scalar_ser[DECAF_EDDSA_25519_PRIVATE_BYTES];
-    uint8_t seed[DECAF_EDDSA_25519_PRIVATE_BYTES];
+    uint8_t secret_scalar_ser[DECAF_EDDSA_$(gf_shortname)_PRIVATE_BYTES];
+    uint8_t seed[DECAF_EDDSA_$(gf_shortname)_PRIVATE_BYTES];
 } expanded_t;
 #pragma pack(pop)
 #endif

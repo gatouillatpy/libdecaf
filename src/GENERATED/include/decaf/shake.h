@@ -57,11 +57,7 @@ void decaf_sha3_init (
  * @return DECAF_SUCCESS otherwise.
  */
 decaf_error_t decaf_sha3_update (
-#ifdef _MSC_VER
-    struct decaf_keccak_sponge_s * __restrict sponge,
-#else
-    struct decaf_keccak_sponge_s * __restrict__ sponge,
-#endif
+    struct decaf_keccak_sponge_s * DECAF_RESTRICT sponge,
     const uint8_t *in,
     size_t len
 ) DECAF_API_VIS;
@@ -79,11 +75,7 @@ decaf_error_t decaf_sha3_update (
  */  
 decaf_error_t decaf_sha3_output (
     decaf_keccak_sponge_t sponge,
-#ifdef _MSC_VER
-    uint8_t * __restrict out,
-#else
-    uint8_t * __restrict__ out,
-#endif
+    uint8_t * DECAF_RESTRICT out,
     size_t len
 ) DECAF_API_VIS;
 
@@ -97,11 +89,7 @@ decaf_error_t decaf_sha3_output (
  */  
 decaf_error_t decaf_sha3_final (
     decaf_keccak_sponge_t sponge,
-#ifdef _MSC_VER
-    uint8_t * __restrict out,
-#else
-    uint8_t * __restrict__ out,
-#endif
+    uint8_t * DECAF_RESTRICT out,
     size_t len
 ) DECAF_API_VIS;
 

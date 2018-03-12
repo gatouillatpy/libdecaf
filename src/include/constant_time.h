@@ -41,7 +41,7 @@
 typedef struct {
     big_register_t unaligned;
 #if _MSC_VER
-} unaligned_br_t
+} unaligned_br_t;
 #else
 } __attribute__((packed)) unaligned_br_t;
 #endif
@@ -52,7 +52,7 @@ typedef struct {
 typedef struct {
     word_t unaligned;
 #if _MSC_VER
-} unaligned_word_t
+} unaligned_word_t;
 #else
 } __attribute__((packed)) unaligned_word_t;
 #endif

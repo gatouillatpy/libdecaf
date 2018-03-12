@@ -43,14 +43,10 @@ protected:
     
 public:
     /** Add more data to running hash */
-#ifdef _MSC_VER
-    inline void update(const uint8_t *__restrict in, size_t len) DECAF_NOEXCEPT { decaf_sha3_update(wrapped,in,len); }
-#else
-    inline void update(const uint8_t *__restrict__ in, size_t len) DECAF_NOEXCEPT { decaf_sha3_update(wrapped, in, len); }
-#endif
+    inline void update(const uint8_t* DECAF_RESTRICT in, size_t len) DECAF_NOEXCEPT { decaf_sha3_update(wrapped, in, len); }
 
     /** Add more data to running hash, C++ version. */
-    inline void update(const Block &s) DECAF_NOEXCEPT { decaf_sha3_update(wrapped,s.data(),s.size()); }
+    inline void update(const Block &s) DECAF_NOEXCEPT { decaf_sha3_update(wrapped, s.data(), s.size()); }
     
     /** Add more data, stream version. */
     inline KeccakHash &operator<<(const Block &s) DECAF_NOEXCEPT { update(s); return *this; }

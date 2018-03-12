@@ -27,9 +27,9 @@ extern const gf RISTRETTO_FACTOR;
 
 /* End of template stuff */
 extern mask_t API_NS(deisogenize) (
-    gf_s *__restrict__ s,
-    gf_s *__restrict__ inv_el_sum,
-    gf_s *__restrict__ inv_el_m1,
+    gf_s* DECAF_RESTRICT s,
+    gf_s* DECAF_RESTRICT inv_el_sum,
+    gf_s* DECAF_RESTRICT inv_el_m1,
     const point_t p,
     mask_t toggle_hibit_s,
     mask_t toggle_altx,

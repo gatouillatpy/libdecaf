@@ -17,6 +17,8 @@
 
 #include <decaf.h>
 #include <decaf/ed448.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 /* Template stuff */
 #define API_NS(_id) decaf_448_##_id
@@ -230,6 +232,16 @@ void API_NS(point_encode)( unsigned char ser[SER_BYTES], const point_t p ) {
     gf_serialize(ser,s,1);
 }
 
+static void field_print2(const gf f) {
+    unsigned char ser[X_SER_BYTES];
+    int i;
+    gf_serialize(ser,f,1);
+    fprintf(stderr, "0x");
+    for (i=X_SER_BYTES-1; i>=0; i--) {
+        fprintf(stderr, "%02x", ser[i]);
+    }
+}
+
 decaf_error_t API_NS(point_decode) (
     point_t p,
     const unsigned char ser[SER_BYTES],
@@ -239,45 +251,89 @@ decaf_error_t API_NS(point_decode) (
     gf_s *tmp2=s2, *ynum=p->z, *isr=p->x, *den=p->t;
     
     mask_t succ = gf_deserialize(s, ser, 1, 0);
+    fprintf(stderr, "1>>>> %d\n", succ);
+    field_print2(s);
+    fprintf(stderr, "\n");
+    fprintf(stderr, "1a>>>> %d\n", ~gf_eq(s, ZERO));
+    fprintf(stderr, "1b>>>> %d\n", bool_to_mask(allow_identity));
     succ &= bool_to_mask(allow_identity) | ~gf_eq(s, ZERO);
+    fprintf(stderr, "2>>>> %d\n", succ);
     succ &= ~gf_lobit(s);
-    
+    fprintf(stderr, "  s="); field_print2(s); fprintf(stderr, "\n");
+    fprintf(stderr, "3>>>> %d\n", succ);
     gf_sqr(s2,s);                  /* s^2 = -as^2 */
+    fprintf(stderr, "  s2="); field_print2(s2); fprintf(stderr, "\n");
+    fprintf(stderr, "4>>>> %d\n", succ);
 #if IMAGINE_TWIST
     gf_sub(s2,ZERO,s2);            /* -as^2 */
 #endif
     gf_sub(den,ONE,s2);            /* 1+as^2 */
+    fprintf(stderr, "  den="); field_print2(den); fprintf(stderr, "\n");
+    fprintf(stderr, "5>>>> %d\n", succ);
     gf_add(ynum,ONE,s2);           /* 1-as^2 */
+    fprintf(stderr, "  ynum="); field_print2(ynum); fprintf(stderr, "\n");
+    fprintf(stderr, "6>>>> %d\n", succ);
     gf_mulw(num,s2,-4*TWISTED_D);
+    fprintf(stderr, "  num="); field_print2(num); fprintf(stderr, "\n");
+    fprintf(stderr, "7>>>> %d\n", succ);
     gf_sqr(tmp,den);               /* tmp = den^2 */
+    fprintf(stderr, "  tmp="); field_print2(tmp); fprintf(stderr, "\n");
+    fprintf(stderr, "8>>>> %d\n", succ);
     gf_add(num,tmp,num);           /* num = den^2 - 4*d*s^2 */
+    fprintf(stderr, "  num="); field_print2(num); fprintf(stderr, "\n");
+    fprintf(stderr, "9>>>> %d\n", succ);
     gf_mul(tmp2,num,tmp);          /* tmp2 = num*den^2 */
+    fprintf(stderr, "  tmp2="); field_print2(tmp2); fprintf(stderr, "\n");
+    fprintf(stderr, "10>>>> %d\n", succ);
     succ &= gf_isr(isr,tmp2);      /* isr = 1/sqrt(num*den^2) */
+    fprintf(stderr, "  isr="); field_print2(isr); fprintf(stderr, "\n");
+    fprintf(stderr, "11>>>> %d\n", succ);
     gf_mul(tmp,isr,den);           /* isr*den */
+    fprintf(stderr, "  tmp="); field_print2(tmp); fprintf(stderr, "\n");
+    fprintf(stderr, "12>>>> %d\n", succ);
     gf_mul(p->y,tmp,ynum);         /* isr*den*(1-as^2) */
+    fprintf(stderr, "  p->y="); field_print2(p->y); fprintf(stderr, "\n");
+    fprintf(stderr, "13>>>> %d\n", succ);
     gf_mul(tmp2,tmp,s);            /* s*isr*den */
+    fprintf(stderr, "  tmp2="); field_print2(tmp2); fprintf(stderr, "\n");
+    fprintf(stderr, "14>>>> %d\n", succ);
     gf_add(tmp2,tmp2,tmp2);        /* 2*s*isr*den */
+    fprintf(stderr, "  tmp2="); field_print2(tmp2); fprintf(stderr, "\n");
+    fprintf(stderr, "15>>>> %d\n", succ);
     gf_mul(tmp,tmp2,isr);          /* 2*s*isr^2*den */
+    fprintf(stderr, "  tmp="); field_print2(tmp); fprintf(stderr, "\n");
+    fprintf(stderr, "16>>>> %d\n", succ);
     gf_mul(p->x,tmp,num);          /* 2*s*isr^2*den*num */
+    fprintf(stderr, "  p->x="); field_print2(p->x); fprintf(stderr, "\n");
+    fprintf(stderr, "17>>>> %d\n", succ);
     gf_mul(tmp,tmp2,RISTRETTO_FACTOR); /* 2*s*isr*den*magic */
+    fprintf(stderr, "  tmp="); field_print2(tmp); fprintf(stderr, "\n");
+    fprintf(stderr, "18>>>> %d\n", succ);
     gf_cond_neg(p->x,gf_lobit(tmp)); /* flip x */
+    fprintf(stderr, "  p->x="); field_print2(p->x); fprintf(stderr, "\n");
+    fprintf(stderr, "19>>>> %d\n", succ);
     
 #if COFACTOR==8
     /* Additionally check y != 0 and x*y*isomagic nonegative */
     succ &= ~gf_eq(p->y,ZERO);
+    fprintf(stderr, "20>>>> %d\n", succ);
     gf_mul(tmp,p->x,p->y);
     gf_mul(tmp2,tmp,RISTRETTO_FACTOR);
     succ &= ~gf_lobit(tmp2);
+    fprintf(stderr, "21>>>> %d\n", succ);
 #endif
 
 #if IMAGINE_TWIST
     gf_copy(tmp,p->x);
     gf_mul_i(p->x,tmp);
+    fprintf(stderr, "21z>>>> %d\n", succ);
 #endif
 
     /* Fill in z and t */
     gf_copy(p->z,ONE);
+    fprintf(stderr, "22>>>> %d\n", succ);
     gf_mul(p->t,p->x,p->y);
+    fprintf(stderr, "23>>>> %d\n", succ);
     
     assert(API_NS(point_valid)(p) | ~succ);
     return decaf_succeed_if(mask_to_bool(succ));
@@ -776,18 +832,35 @@ decaf_bool_t API_NS(point_valid) (
     const point_t p
 ) {
     gf a,b,c;
+    fprintf(stderr, "  p->x="); field_print2(p->x); fprintf(stderr, "\n");
+    fprintf(stderr, "  p->y="); field_print2(p->y); fprintf(stderr, "\n");
+    fprintf(stderr, "  p->z="); field_print2(p->z); fprintf(stderr, "\n");
+    fprintf(stderr, "  p->t="); field_print2(p->t); fprintf(stderr, "\n");
     gf_mul(a,p->x,p->y);
+    fprintf(stderr, "  a="); field_print2(a); fprintf(stderr, "\n");
     gf_mul(b,p->z,p->t);
+    fprintf(stderr, "  b="); field_print2(b); fprintf(stderr, "\n");
     mask_t out = gf_eq(a,b);
+    fprintf(stderr, "  out=%d\n", out);
     gf_sqr(a,p->x);
+    fprintf(stderr, "  a="); field_print2(a); fprintf(stderr, "\n");
     gf_sqr(b,p->y);
+    fprintf(stderr, "  b="); field_print2(b); fprintf(stderr, "\n");
     gf_sub(a,b,a);
+    fprintf(stderr, "  a="); field_print2(a); fprintf(stderr, "\n");
     gf_sqr(b,p->t);
+    fprintf(stderr, "  b="); field_print2(b); fprintf(stderr, "\n");
+    fprintf(stderr, "  TWISTED_D=%d\n", TWISTED_D);
     gf_mulw(c,b,TWISTED_D);
+    fprintf(stderr, "  c="); field_print2(c); fprintf(stderr, "\n");
     gf_sqr(b,p->z);
+    fprintf(stderr, "  b="); field_print2(b); fprintf(stderr, "\n");
     gf_add(b,b,c);
+    fprintf(stderr, "  b="); field_print2(b); fprintf(stderr, "\n");
     out &= gf_eq(a,b);
+    fprintf(stderr, "  out=%d\n", out);
     out &= ~gf_eq(p->z,ZERO);
+    fprintf(stderr, "  out=%d\n", out);
     return mask_to_bool(out);
 }
 

@@ -5,6 +5,14 @@ comb_config = namedtuple("comb_config",["n","t","s"])
 wnaf_config = namedtuple("wnaf_config",["fixed","var"])
 
 field_data = {
+    "p168" : {
+        "gf_desc" : "2^168 - 2^8 - 1",
+        "gf_shortname" : "168",
+#        "gf_bits" : 192,
+        "gf_impl_bits" : 256,
+        "gf_lit_limb_bits" : 42,
+        "elligator_onto" : 0
+    },
     "p25519" : {
         "gf_desc" : "2^255 - 19",
         "gf_shortname" : "25519",
@@ -22,6 +30,25 @@ field_data = {
 }
 
 curve_data = {
+    "e168" : {
+        "eddsa_encode_ratio": 4,
+        "x_encode_ratio": 2,
+        "altname": "Telex",
+        "name" : "E-168",
+        "cofactor" : 4,
+        "field" : "p168",
+        "scalar_bits" : 166,
+        "d": -715,
+        "trace": -0x156d6cd18a46f430d1ab97,
+        "rist_base": "a8921705d6b566913612d991733015f3ee9a30e75a",
+        "mont_base": 3,
+        
+        "combs":comb_config(5,5,18),
+        "wnaf":wnaf_config(5,3),
+        "window_bits":5,
+        
+        "eddsa_dom":"SigE168"
+    },
     "curve25519" : {
         "altname" : "IsoEd25519",
         "iso_to" : "Curve25519",

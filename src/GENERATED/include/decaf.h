@@ -26,6 +26,7 @@
 #ifndef __DECAF_H__
 #define __DECAF_H__ 1
 
+#include <decaf/point_168.h>
 #include <decaf/point_255.h>
 #include <decaf/point_448.h>
 

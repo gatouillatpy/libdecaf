@@ -14,7 +14,6 @@
 /* Guarantee: a^2 x = 0 if x = 0; else a^2 x = 1 or SQRT_MINUS_ONE; */
 mask_t gf_isr (gf a, const gf x) {
     gf L0, L1, L2, L3;
-    
     gf_sqr (L0, x);
     gf_mul (L1, L0, x);
     gf_sqr (L0, L1);

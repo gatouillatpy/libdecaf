@@ -98,6 +98,14 @@ const uint8_t base_multiples<Ed448Goldilocks>::values[][Ed448Goldilocks::Point::
      0x90,0xc5,0x4c,0x24,0xc6,0xec,0xb1,0xe0,0xac,0xeb,0x07,0x5f,0x60,0x56},
 };
 
+template <> struct base_multiples<E168> {
+    static const int count = 0;
+    static const uint8_t values[1 /* count */][E168::Point::SER_BYTES];
+};
+const uint8_t base_multiples<E168>::values[][E168::Point::SER_BYTES] = {
+        /* TODO */
+};
+
 template <typename Group> struct elligator_examples;
 
 /* Examples for Elligator */
@@ -287,4 +295,18 @@ const uint8_t elligator_examples<Ed448Goldilocks>::outputs
      0x57,0x0d,0xdf,0x8c,0xdc,0x47,0xdf,0x6d,0xfa,0x6a,0x8d,0x67,0x45,0x4f,
      0x6b,0x44,0x6d,0xbf,0xf3,0x41,0x1c,0x57,0x1c,0xf0,0x77,0x14,0x06,0xf6,
      0x8c,0xb9,0xa3,0x40,0x34,0x70,0xd6,0x36,0xe5,0xa6,0xce,0x1b,0x84,0xcc}
+};
+
+template <> struct elligator_examples<E168> {
+    static const int count = 0;
+    static const uint8_t inputs[1 /* count */][E168::Point::HASH_BYTES];
+    static const uint8_t outputs[1 /* count */][E168::Point::SER_BYTES];
+};
+const uint8_t elligator_examples<E168>::inputs
+    [1 /* elligator_examples<E168>::count */][E168::Point::HASH_BYTES] = {
+        /* TODO */
+};
+const uint8_t elligator_examples<E168>::outputs
+    [1 /* elligator_examples<E168>::count */][E168::Point::SER_BYTES] = {
+        /* TODO */
 };

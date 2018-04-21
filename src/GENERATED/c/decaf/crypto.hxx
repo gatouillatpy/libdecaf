@@ -18,6 +18,7 @@
 #ifndef __DECAF_CRYPTO_HXX__
 #define __DECAF_CRYPTO_HXX__ 1
 
+#include <decaf/crypto_168.hxx>
 #include <decaf/crypto_255.hxx>
 #include <decaf/crypto_448.hxx>
 

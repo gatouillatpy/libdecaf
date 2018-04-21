@@ -1,47 +1,58 @@
-/** @brief Decaf high-level functions. */
-
+/**
+ * @file e168/decaf.c
+ * @author Mike Hamburg
+ *
+ * @copyright
+ *   Copyright (c) 2015-2016 Cryptography Research, Inc.  \n
+ *   Released under the MIT License.  See LICENSE.txt for license information.
+ *
+ * @brief Decaf high-level functions.
+ *
+ * @warning This file was automatically generated in Python.
+ * Please do not edit it.
+ */
 #define _XOPEN_SOURCE 600 /* for posix_memalign */
 #include "word.h"
 #include "field.h"
 
 #include <decaf.h>
-#include <decaf/ed$(gf_bits).h>
+#include <decaf/ed168.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 /* Template stuff */
-#define API_NS(_id) $(c_ns)_##_id
-#define SCALAR_BITS $(C_NS)_SCALAR_BITS
-#define SCALAR_SER_BYTES $(C_NS)_SCALAR_BYTES
-#define SCALAR_LIMBS $(C_NS)_SCALAR_LIMBS
+#define API_NS(_id) decaf_168_##_id
+#define SCALAR_BITS DECAF_168_SCALAR_BITS
+#define SCALAR_SER_BYTES DECAF_168_SCALAR_BYTES
+#define SCALAR_LIMBS DECAF_168_SCALAR_LIMBS
 #define scalar_t API_NS(scalar_t)
 #define point_t API_NS(point_t)
 #define precomputed_s API_NS(precomputed_s)
-#define IMAGINE_TWIST $(imagine_twist)
-#define COFACTOR $(cofactor)
+#define IMAGINE_TWIST 0
+#define COFACTOR 4
 
 /* Comb config: number of combs, n, t, s. */
-#define COMBS_N $(combs.n)
-#define COMBS_T $(combs.t)
-#define COMBS_S $(combs.s)
-#define DECAF_WINDOW_BITS $(window_bits)
-#define DECAF_WNAF_FIXED_TABLE_BITS $(wnaf.fixed)
-#define DECAF_WNAF_VAR_TABLE_BITS $(wnaf.var)
+#define COMBS_N 5
+#define COMBS_T 5
+#define COMBS_S 18
+#define DECAF_WINDOW_BITS 5
+#define DECAF_WNAF_FIXED_TABLE_BITS 5
+#define DECAF_WNAF_VAR_TABLE_BITS 3
 
-#define EDDSA_USE_SIGMA_ISOGENY $(eddsa_sigma_iso)
+#define EDDSA_USE_SIGMA_ISOGENY 0
 
-static const int EDWARDS_D = $(d);
+static const int EDWARDS_D = -715;
 static const scalar_t point_scalarmul_adjustment = {{{
-    $(ser((2**(scalar_bits-1+window_bits - ((scalar_bits-1)%window_bits)) - 1) % q,64,"SC_LIMB"))
+    SC_LIMB(0xee3975ec48edc054), SC_LIMB(0xffffffffffafa5a7), SC_LIMB(0x0000003fffffffff)
 }}}, precomputed_scalarmul_adjustment = {{{
-    $(ser((2**(combs.n*combs.t*combs.s) - 1) % q,64,"SC_LIMB"))
+    SC_LIMB(0x76accecbbbe4083c), SC_LIMB(0x7be47d12760e0c6a), SC_LIMB(0x00000034a21ff552)
 }}};
 
-const uint8_t decaf_x$(gf_shortname)_base_point[DECAF_X$(gf_shortname)_PUBLIC_BYTES] = { $(ser(mont_base,8)) };
+const uint8_t decaf_x168_base_point[DECAF_X168_PUBLIC_BYTES] = { 0x03 };
 
-#define RISTRETTO_FACTOR $(C_NS)_RISTRETTO_FACTOR
+#define RISTRETTO_FACTOR DECAF_168_RISTRETTO_FACTOR
 const gf RISTRETTO_FACTOR = {FIELD_LITERAL(
-    $(ser(msqrt(d-1 if imagine_twist else -d,modulus,hi_bit_clear=True),gf_lit_limb_bits))
+    0x0d716209420, 0x3f4e03b62c0, 0x3c4aa36f823, 0x160ab874c8b
 )};
 
 #if IMAGINE_TWIST
@@ -1091,7 +1102,7 @@ decaf_error_t API_NS(direct_scalarmul) (
 }
 
 void API_NS(point_mul_by_ratio_and_encode_like_eddsa) (
-    uint8_t enc[DECAF_EDDSA_$(gf_shortname)_PUBLIC_BYTES],
+    uint8_t enc[DECAF_EDDSA_168_PUBLIC_BYTES],
     const point_t p
 ) {
     
@@ -1171,9 +1182,9 @@ void API_NS(point_mul_by_ratio_and_encode_like_eddsa) (
     gf_mul(x,y,z);
     
     /* Encode */
-    enc[DECAF_EDDSA_$(gf_shortname)_PRIVATE_BYTES-1] = 0;
+    enc[DECAF_EDDSA_168_PRIVATE_BYTES-1] = 0;
     gf_serialize(enc, x, 1);
-    enc[DECAF_EDDSA_$(gf_shortname)_PRIVATE_BYTES-1] |= 0x80 & gf_lobit(t);
+    enc[DECAF_EDDSA_168_PRIVATE_BYTES-1] |= 0x80 & gf_lobit(t);
 
     decaf_bzero(x,sizeof(x));
     decaf_bzero(y,sizeof(y));
@@ -1185,17 +1196,17 @@ void API_NS(point_mul_by_ratio_and_encode_like_eddsa) (
 
 decaf_error_t API_NS(point_decode_like_eddsa_and_mul_by_ratio) (
     point_t p,
-    const uint8_t enc[DECAF_EDDSA_$(gf_shortname)_PUBLIC_BYTES]
+    const uint8_t enc[DECAF_EDDSA_168_PUBLIC_BYTES]
 ) {
-    uint8_t enc2[DECAF_EDDSA_$(gf_shortname)_PUBLIC_BYTES];
+    uint8_t enc2[DECAF_EDDSA_168_PUBLIC_BYTES];
     memcpy(enc2,enc,sizeof(enc2));
 
-    mask_t low = ~word_is_zero(enc2[DECAF_EDDSA_$(gf_shortname)_PRIVATE_BYTES-1] & 0x80);
-    enc2[DECAF_EDDSA_$(gf_shortname)_PRIVATE_BYTES-1] &= ~0x80;
+    mask_t low = ~word_is_zero(enc2[DECAF_EDDSA_168_PRIVATE_BYTES-1] & 0x80);
+    enc2[DECAF_EDDSA_168_PRIVATE_BYTES-1] &= ~0x80;
     
     mask_t succ = gf_deserialize(p->y, enc2, 1, 0);
-#if $(gf_bits % 8) == 0
-    succ &= word_is_zero(enc2[DECAF_EDDSA_$(gf_shortname)_PRIVATE_BYTES-1]);
+#if 0 == 0
+    succ &= word_is_zero(enc2[DECAF_EDDSA_168_PRIVATE_BYTES-1]);
 #endif
 
     gf_sqr(p->x,p->y);
@@ -1287,7 +1298,7 @@ decaf_error_t API_NS(point_decode_like_eddsa_and_mul_by_ratio) (
     return decaf_succeed_if(mask_to_bool(succ));
 }
 
-decaf_error_t decaf_x$(gf_shortname) (
+decaf_error_t decaf_x168 (
     uint8_t out[X_PUBLIC_BYTES],
     const uint8_t base[X_PUBLIC_BYTES],
     const uint8_t scalar[X_PRIVATE_BYTES]
@@ -1359,12 +1370,12 @@ decaf_error_t decaf_x$(gf_shortname) (
 }
 
 /* Thanks Johan Pascal */
-void decaf_ed$(gf_shortname)_convert_public_key_to_x$(gf_shortname) (
-    uint8_t x[DECAF_X$(gf_shortname)_PUBLIC_BYTES],
-    const uint8_t ed[DECAF_EDDSA_$(gf_shortname)_PUBLIC_BYTES]
+void decaf_ed168_convert_public_key_to_x168 (
+    uint8_t x[DECAF_X168_PUBLIC_BYTES],
+    const uint8_t ed[DECAF_EDDSA_168_PUBLIC_BYTES]
 ) {
     gf y;
-    const uint8_t mask = (uint8_t)(0xFE<<($((gf_bits-1)%8)));
+    const uint8_t mask = (uint8_t)(0xFE<<(7));
     ignore_result(gf_deserialize(y, ed, 1, mask));
     
     {
@@ -1395,14 +1406,14 @@ void decaf_ed$(gf_shortname)_convert_public_key_to_x$(gf_shortname) (
     }
 }
 
-void decaf_x$(gf_shortname)_generate_key (
+void decaf_x168_generate_key (
     uint8_t out[X_PUBLIC_BYTES],
     const uint8_t scalar[X_PRIVATE_BYTES]
 ) {
-    decaf_x$(gf_shortname)_derive_public_key(out,scalar);
+    decaf_x168_derive_public_key(out,scalar);
 }
 
-void API_NS(point_mul_by_ratio_and_encode_like_x$(gf_shortname)) (
+void API_NS(point_mul_by_ratio_and_encode_like_x168) (
     uint8_t out[X_PUBLIC_BYTES],
     const point_t p
 ) {
@@ -1422,7 +1433,7 @@ void API_NS(point_mul_by_ratio_and_encode_like_x$(gf_shortname)) (
     API_NS(point_destroy(q));
 }
 
-void decaf_x$(gf_shortname)_derive_public_key (
+void decaf_x168_derive_public_key (
     uint8_t out[X_PUBLIC_BYTES],
     const uint8_t scalar[X_PRIVATE_BYTES]
 ) {
@@ -1438,12 +1449,12 @@ void decaf_x$(gf_shortname)_derive_public_key (
     API_NS(scalar_decode_long)(the_scalar,scalar2,sizeof(scalar2));
     
     /* Compensate for the encoding ratio */
-    for (unsigned i=1; i<DECAF_X$(gf_shortname)_ENCODE_RATIO; i<<=1) {
+    for (unsigned i=1; i<DECAF_X168_ENCODE_RATIO; i<<=1) {
         API_NS(scalar_halve)(the_scalar,the_scalar);
     }
     point_t p;
     API_NS(precomputed_scalarmul)(p,API_NS(precomputed_base),the_scalar);
-    API_NS(point_mul_by_ratio_and_encode_like_x$(gf_shortname))(out,p);
+    API_NS(point_mul_by_ratio_and_encode_like_x168)(out,p);
     API_NS(point_destroy)(p);
 }
 

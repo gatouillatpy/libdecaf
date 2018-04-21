@@ -28,6 +28,7 @@ namespace decaf {
     };
 }
 
+#include <decaf/ed168.hxx>
 #include <decaf/ed255.hxx>
 #include <decaf/ed448.hxx>
 

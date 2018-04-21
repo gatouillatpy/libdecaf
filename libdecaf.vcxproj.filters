@@ -34,6 +34,15 @@
     <Filter Include="Source Files\p448\arch_32">
       <UniqueIdentifier>{62c0f794-fa0f-408f-a10e-45b74d709562}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\p168">
+      <UniqueIdentifier>{d6357977-ee65-4a01-8723-5af3bd0e50c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\p168\arch_32">
+      <UniqueIdentifier>{efab23f8-7e6c-46d3-b8a8-e95de38c026f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\e168">
+      <UniqueIdentifier>{ec686f79-8771-43a3-b012-ca740cf21b89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GENERATED\include\decaf.hxx">
@@ -108,6 +117,24 @@
     <ClInclude Include="src\p25519\arch_32\f_impl.h">
       <Filter>Source Files\p25519\arch_32</Filter>
     </ClInclude>
+    <ClInclude Include="src\p168\arch_32\f_impl.h">
+      <Filter>Source Files\p168\arch_32</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\c\p168\f_field.h">
+      <Filter>Source Files\p168</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\ed168.h">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\ed168.hxx">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\point_168.h">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GENERATED\include\decaf\point_168.hxx">
+      <Filter>Header Files\decaf</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GENERATED\c\p25519\f_generic.c">
@@ -117,12 +144,6 @@
       <Filter>Source Files\p448</Filter>
     </ClCompile>
     <ClCompile Include="src\GENERATED\c\ed448goldilocks\decaf.c">
-      <Filter>Source Files\ed448goldilocks</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GENERATED\c\ed448goldilocks\decaf_gen_tables.c">
-      <Filter>Source Files\ed448goldilocks</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GENERATED\c\ed448goldilocks\decaf_tables.c">
       <Filter>Source Files\ed448goldilocks</Filter>
     </ClCompile>
     <ClCompile Include="src\GENERATED\c\ed448goldilocks\eddsa.c">
@@ -135,12 +156,6 @@
       <Filter>Source Files\ed448goldilocks</Filter>
     </ClCompile>
     <ClCompile Include="src\GENERATED\c\curve25519\decaf.c">
-      <Filter>Source Files\curve25519</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GENERATED\c\curve25519\decaf_gen_tables.c">
-      <Filter>Source Files\curve25519</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GENERATED\c\curve25519\decaf_tables.c">
       <Filter>Source Files\curve25519</Filter>
     </ClCompile>
     <ClCompile Include="src\GENERATED\c\curve25519\eddsa.c">
@@ -175,6 +190,36 @@
     </ClCompile>
     <ClCompile Include="src\p25519\f_arithmetic.c">
       <Filter>Source Files\p25519</Filter>
+    </ClCompile>
+    <ClCompile Include="src\p168\f_arithmetic.c">
+      <Filter>Source Files\p168</Filter>
+    </ClCompile>
+    <ClCompile Include="src\p168\arch_32\f_impl.c">
+      <Filter>Source Files\p168\arch_32</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\p168\f_generic.c">
+      <Filter>Source Files\p168</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\e168\decaf.c">
+      <Filter>Source Files\e168</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\e168\eddsa.c">
+      <Filter>Source Files\e168</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\e168\elligator.c">
+      <Filter>Source Files\e168</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\e168\scalar.c">
+      <Filter>Source Files\e168</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\e168\decaf_tables.c">
+      <Filter>Source Files\e168</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\ed448goldilocks\decaf_tables.c">
+      <Filter>Source Files\ed448goldilocks</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GENERATED\c\curve25519\decaf_tables.c">
+      <Filter>Source Files\curve25519</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

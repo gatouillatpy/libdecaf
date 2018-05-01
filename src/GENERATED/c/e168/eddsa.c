@@ -18,6 +18,17 @@
 #include <decaf/sha512.h>
 #include <string.h>
 
+#include <stdio.h>
+#include <stdlib.h>
+
+static void field_print3(const uint8_t *ser) {
+	int i;
+	fprintf(stderr, "0x");
+	for (i = DECAF_EDDSA_168_PRIVATE_BYTES - 1; i >= 0; i--) {
+		fprintf(stderr, "%02x", ser[i]);
+	}
+}
+
 #define API_NAME "decaf_168"
 #define API_NS(_id) decaf_168_##_id
 
@@ -34,8 +45,8 @@
 #define EDDSA_PREHASH_BYTES 64
 
 #if NO_CONTEXT
-const uint8_t NO_CONTEXT_POINTS_HERE = 0;
-const uint8_t * const DECAF_ED168_NO_CONTEXT = &NO_CONTEXT_POINTS_HERE;
+const uint8_t DECAF_ED168_NO_CONTEXT_POINTS_HERE = 0;
+const uint8_t * const DECAF_ED168_NO_CONTEXT = &DECAF_ED168_NO_CONTEXT_POINTS_HERE;
 #endif
 
 static void clamp (
@@ -113,7 +124,8 @@ void decaf_ed168_derive_public_key (
         DECAF_EDDSA_168_PRIVATE_BYTES
     );
     clamp(secret_scalar_ser);
-        
+	field_print3(secret_scalar_ser);
+
     API_NS(scalar_t) secret_scalar;
     API_NS(scalar_decode_long)(secret_scalar, secret_scalar_ser, sizeof(secret_scalar_ser));
     

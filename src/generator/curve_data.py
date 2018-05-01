@@ -43,10 +43,11 @@ curve_data = {
         "rist_base": "a8921705d6b566913612d991733015f3ee9a30e75a",
         "mont_base": 3,
         
-        "combs":comb_config(5,5,18),
+        "combs":comb_config(2,5,17),
         "wnaf":wnaf_config(5,3),
-        "window_bits":5,
+        "window_bits":3,
         
+        "eddsa_no_context": 1,
         "eddsa_dom":"SigE168"
     },
     "curve25519" : {
@@ -89,6 +90,7 @@ curve_data = {
         "wnaf":wnaf_config(5,3),
         "window_bits":5,
         
+        "eddsa_no_context": 1,
         "eddsa_dom":"SigEd448"
     }
 }

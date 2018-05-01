@@ -33,7 +33,8 @@ extern "C" {
 #define DECAF_EDDSA_448_SIGNATURE_BYTES (DECAF_EDDSA_448_PUBLIC_BYTES + DECAF_EDDSA_448_PRIVATE_BYTES)
 
 /** Does EdDSA support non-contextual signatures? */
-#define DECAF_EDDSA_448_SUPPORTS_CONTEXTLESS_SIGS 0
+#define DECAF_EDDSA_448_SUPPORTS_CONTEXTLESS_SIGS 1
+extern const uint8_t * const DECAF_ED448_NO_CONTEXT DECAF_API_VIS;
 
 
 /** Prehash context (raw), because each EdDSA instance has a different prehash. */

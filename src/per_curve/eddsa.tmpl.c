@@ -25,8 +25,8 @@
 #define EDDSA_PREHASH_BYTES 64
 
 #if NO_CONTEXT
-const uint8_t NO_CONTEXT_POINTS_HERE = 0;
-const uint8_t * const DECAF_ED$(gf_shortname)_NO_CONTEXT = &NO_CONTEXT_POINTS_HERE;
+const uint8_t DECAF_ED$(gf_shortname)_NO_CONTEXT_POINTS_HERE = 0;
+const uint8_t * const DECAF_ED$(gf_shortname)_NO_CONTEXT = &DECAF_ED$(gf_shortname)_NO_CONTEXT_POINTS_HERE;
 #endif
 
 static void clamp (

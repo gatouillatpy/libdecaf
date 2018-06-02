@@ -4,13 +4,70 @@
  */
 
 #include "word.h"
+#include "field.h"
+#include <decaf.h>
 #include <decaf/ed$(gf_bits).h>
 #include <decaf/shake.h>
 #include <decaf/sha512.h>
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <decaf/point_$(gf_bits).h>
 
 #define API_NAME "$(c_ns)"
 #define API_NS(_id) $(c_ns)_##_id
+#define scalar_t API_NS(scalar_t)
+#define SCALAR_LIMBS $(C_NS)_SCALAR_LIMBS
+
+static void field_print2(const gf f) {
+    unsigned char ser[X_SER_BYTES];
+    int i;
+    gf_serialize(ser,f,1);
+    fprintf(stderr, "0x");
+    for (i=X_SER_BYTES-1; i>=0; i--) {
+        fprintf(stderr, "%02x", ser[i]);
+    }
+}
+
+/*static void field_print2_raw(const gf f) {
+    unsigned char ser[2*X_SER_BYTES];
+    int i; int k = 0;
+    for (i=0; i<SCALAR_LIMBS; i++) {
+        decaf_word_t x = f->limb[i];
+        ser[k++] = x & 0xFF;
+        ser[k++] = (x >> 8) & 0xFF;
+        ser[k++] = (x >> 16) & 0xFF;
+        ser[k++] = (x >> 24) & 0xFF;
+    }
+    fprintf(stderr, "0x");
+    for (i=X_SER_BYTES-1; i>=0; i--) {
+        fprintf(stderr, "%02x", ser[i]);
+    }
+}*/
+
+static void field_print3(const uint8_t *ser) {
+    int i;
+    fprintf(stderr, "0x");
+    for (i = DECAF_EDDSA_$(gf_shortname)_PRIVATE_BYTES - 1; i >= 0; i--) {
+        fprintf(stderr, "%02x", ser[i]);
+    }
+}
+
+static void field_print4(const scalar_t f) {
+    unsigned char ser[2*X_SER_BYTES];
+    int i; int k = 0;
+    for (i=0; i<SCALAR_LIMBS; i++) {
+        decaf_word_t x = f->limb[i];
+        ser[k++] = x & 0xFF;
+        ser[k++] = (x >> 8) & 0xFF;
+        ser[k++] = (x >> 16) & 0xFF;
+        ser[k++] = (x >> 24) & 0xFF;
+    }
+    fprintf(stderr, "0x");
+    for (i=X_SER_BYTES-1; i>=0; i--) {
+        fprintf(stderr, "%02x", ser[i]);
+    }
+}
 
 #define hash_ctx_t   decaf_$(eddsa_hash)_ctx_t
 #define hash_init    decaf_$(eddsa_hash)_init
@@ -94,6 +151,7 @@ void decaf_ed$(gf_shortname)_derive_public_key (
     uint8_t pubkey[DECAF_EDDSA_$(gf_shortname)_PUBLIC_BYTES],
     const uint8_t privkey[DECAF_EDDSA_$(gf_shortname)_PRIVATE_BYTES]
 ) {
+    int i;
     /* only this much used for keygen */
     uint8_t secret_scalar_ser[DECAF_EDDSA_$(gf_shortname)_PRIVATE_BYTES];
     
@@ -104,9 +162,11 @@ void decaf_ed$(gf_shortname)_derive_public_key (
         DECAF_EDDSA_$(gf_shortname)_PRIVATE_BYTES
     );
     clamp(secret_scalar_ser);
+    fprintf(stderr, "secret_scalar_ser="); field_print3(secret_scalar_ser); fprintf(stderr, "\n");
         
     API_NS(scalar_t) secret_scalar;
     API_NS(scalar_decode_long)(secret_scalar, secret_scalar_ser, sizeof(secret_scalar_ser));
+    fprintf(stderr, "secret_scalar="); field_print4(secret_scalar); fprintf(stderr, "\n");
     
     /* Since we are going to mul_by_cofactor during encoding, divide by it here.
      * However, the EdDSA base point is not the same as the decaf base point if
@@ -117,9 +177,83 @@ void decaf_ed$(gf_shortname)_derive_public_key (
     for (unsigned int c=1; c<$(C_NS)_EDDSA_ENCODE_RATIO; c <<= 1) {
         API_NS(scalar_halve)(secret_scalar,secret_scalar);
     }
-    
+    fprintf(stderr, "secret_scalar="); field_print4(secret_scalar); fprintf(stderr, " (after ratio division)\n");
+
+    fprintf(stderr, "point_base->x="); field_print2(API_NS(point_base)->x); fprintf(stderr, "\n");
+    fprintf(stderr, "point_base->y="); field_print2(API_NS(point_base)->y); fprintf(stderr, "\n");
+    fprintf(stderr, "point_base->z="); field_print2(API_NS(point_base)->z); fprintf(stderr, "\n");
+    fprintf(stderr, "point_base->t="); field_print2(API_NS(point_base)->t); fprintf(stderr, "\n");
+
     API_NS(point_t) p;
-    API_NS(precomputed_scalarmul)(p,API_NS(precomputed_base),secret_scalar);
+    //API_NS(precomputed_scalarmul)(p,API_NS(precomputed_base),secret_scalar);
+    API_NS(point_scalarmul)(p,API_NS(point_base),secret_scalar); // TODO: put the one above back
+    fprintf(stderr, "p->x="); field_print2(p->x); fprintf(stderr, "\n");
+    fprintf(stderr, "p->y="); field_print2(p->y); fprintf(stderr, "\n");
+    fprintf(stderr, "p->z="); field_print2(p->z); fprintf(stderr, "\n");
+    fprintf(stderr, "p->t="); field_print2(p->t); fprintf(stderr, "\n");
+    
+    // TEMP
+    API_NS(scalar_t) s;
+    for (i=0; i<SCALAR_LIMBS; i++) {
+        s->limb[i] = 0;
+    }
+    s->limb[0] = 1;
+    fprintf(stderr, "s="); field_print4(s); fprintf(stderr, "\n");
+    for (unsigned int c=1; c<$(C_NS)_EDDSA_ENCODE_RATIO; c <<= 1) {
+        API_NS(scalar_halve)(s,s);
+    }
+    fprintf(stderr, "s="); field_print4(s); fprintf(stderr, " (after ratio division)\n");
+    API_NS(point_t) q;
+    API_NS(point_scalarmul)(q,API_NS(point_base),s);
+    fprintf(stderr, "q->x="); field_print2(q->x); fprintf(stderr, "\n");
+    fprintf(stderr, "q->y="); field_print2(q->y); fprintf(stderr, "\n");
+    fprintf(stderr, "q->z="); field_print2(q->z); fprintf(stderr, "\n");
+    fprintf(stderr, "q->t="); field_print2(q->t); fprintf(stderr, "\n");
+    API_NS(point_mul_by_ratio_and_encode_like_eddsa)(pubkey, q);
+    fprintf(stderr, "e="); field_print3(pubkey); fprintf(stderr, "\n");
+    API_NS(scalar_destroy)(s);
+    API_NS(point_destroy)(q);
+    // END TEMP
+    
+    // TEST
+    fprintf(stderr, "TEST point_scalarmul\n");
+    API_NS(scalar_t) s_mul;
+    for (i=0; i<SCALAR_LIMBS; i++) {
+        s_mul->limb[i] = 0;
+    }
+    s_mul->limb[0] = 2;
+    fprintf(stderr, "s_mul="); field_print4(s_mul); fprintf(stderr, "\n");
+    API_NS(point_t) p_mul;
+    API_NS(point_scalarmul)(p_mul,API_NS(point_base),s_mul);
+    fprintf(stderr, "p_mul->x="); field_print2(p_mul->x); fprintf(stderr, "\n");
+    fprintf(stderr, "p_mul->y="); field_print2(p_mul->y); fprintf(stderr, "\n");
+    fprintf(stderr, "p_mul->z="); field_print2(p_mul->z); fprintf(stderr, "\n");
+    fprintf(stderr, "p_mul->t="); field_print2(p_mul->t); fprintf(stderr, "\n");
+    API_NS(scalar_destroy)(s_mul);
+    API_NS(point_destroy)(p_mul);
+    fprintf(stderr, "TEST point_add\n");
+    API_NS(point_t) p_add;
+    API_NS(point_add)(p_add,API_NS(point_base),API_NS(point_base));
+    fprintf(stderr, "p_add->x="); field_print2(p_add->x); fprintf(stderr, "\n");
+    fprintf(stderr, "p_add->y="); field_print2(p_add->y); fprintf(stderr, "\n");
+    fprintf(stderr, "p_add->z="); field_print2(p_add->z); fprintf(stderr, "\n");
+    fprintf(stderr, "p_add->t="); field_print2(p_add->t); fprintf(stderr, "\n");
+    API_NS(point_destroy)(p_add);
+    fprintf(stderr, "TEST point_double\n");
+    API_NS(point_t) p_double;
+    API_NS(point_double)(p_double,API_NS(point_base));
+    fprintf(stderr, "p_double->x="); field_print2(p_double->x); fprintf(stderr, "\n");
+    fprintf(stderr, "p_double->y="); field_print2(p_double->y); fprintf(stderr, "\n");
+    fprintf(stderr, "p_double->z="); field_print2(p_double->z); fprintf(stderr, "\n");
+    fprintf(stderr, "p_double->t="); field_print2(p_double->t); fprintf(stderr, "\n");
+    API_NS(point_destroy)(p_double);
+    decaf_bool_t b0 = API_NS(point_eq)(p_mul, p_add);
+    fprintf(stderr, "b0=%d\n", (int)b0);
+    decaf_bool_t b1 = API_NS(point_eq)(p_mul, p_double);
+    fprintf(stderr, "b1=%d\n", (int)b1);
+    decaf_bool_t b2 = API_NS(point_eq)(p_add, p_double);
+    fprintf(stderr, "b2=%d\n\n", (int)b2);
+    // END TEST
     
     API_NS(point_mul_by_ratio_and_encode_like_eddsa)(pubkey, p);
         

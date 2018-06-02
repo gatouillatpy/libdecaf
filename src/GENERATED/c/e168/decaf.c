@@ -33,7 +33,7 @@
 #define COMBS_N 2
 #define COMBS_T 5
 #define COMBS_S 17
-#define DECAF_WINDOW_BITS 3
+#define DECAF_WINDOW_BITS 5
 #define DECAF_WNAF_FIXED_TABLE_BITS 5
 #define DECAF_WNAF_VAR_TABLE_BITS 3
 
@@ -41,12 +41,12 @@
 
 static const int EDWARDS_D = -715;
 static const scalar_t point_scalarmul_adjustment = {{{
-    SC_LIMB(0x62d84ac8db62c010), SC_LIMB(0xffffffffffefedee), SC_LIMB(0x0000003fffffffff)
+    SC_LIMB(0xe2044e3f4a32e7a2), SC_LIMB(0xffffffffffb2856a), SC_LIMB(0x0000003fffffffff)
 }}}, precomputed_scalarmul_adjustment = {{{
-    SC_LIMB(0xee3975ec48edc054), SC_LIMB(0xffffffffffafa5a7), SC_LIMB(0x0000003fffffffff)
+    SC_LIMB(0xe2044e3f4a32e7a2), SC_LIMB(0xffffffffffb2856a), SC_LIMB(0x0000003fffffffff)
 }}};
 
-const uint8_t decaf_x168_base_point[DECAF_X168_PUBLIC_BYTES] = { 0x03 };
+const uint8_t decaf_x168_base_point[DECAF_X168_PUBLIC_BYTES] = { 0x05 };
 
 #define RISTRETTO_FACTOR DECAF_168_RISTRETTO_FACTOR
 const gf RISTRETTO_FACTOR = {FIELD_LITERAL(

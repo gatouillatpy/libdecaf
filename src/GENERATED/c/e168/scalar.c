@@ -22,11 +22,11 @@
 #define SCALAR_LIMBS DECAF_168_SCALAR_LIMBS
 #define scalar_t API_NS(scalar_t)
 
-static const decaf_word_t MONTGOMERY_FACTOR = (decaf_word_t)0x18f80dd28cf292d3ull;
+static const decaf_word_t MONTGOMERY_FACTOR = (decaf_word_t)0x1622e53c8de7bca5ull;
 static const scalar_t sc_p = {{{
-    SC_LIMB(0x346291bd0c346aa5), SC_LIMB(0x0000000000055b5b), SC_LIMB(0x0000004000000000)
+    SC_LIMB(0x3532e9b7839634d3), SC_LIMB(0x0000000000052a4e), SC_LIMB(0x0000004000000000)
 }}}, sc_r2 = {{{
-    SC_LIMB(0xbbc86369d87d1386), SC_LIMB(0xf4f9447d288b9469), SC_LIMB(0x0000002ae48d02f0)
+    SC_LIMB(0x8cfafa72d88adf1f), SC_LIMB(0xef9123c281667071), SC_LIMB(0x0000003e5c5a6a46)
 }}};
 /* End of template stuff */
 

@@ -39,13 +39,13 @@ curve_data = {
         "field" : "p168",
         "scalar_bits" : 166,
         "d": -715,
-        "trace": -0x156d6cd18a46f430d1ab97,
-        "rist_base": "a8921705d6b566913612d991733015f3ee9a30e75a",
-        "mont_base": 3,
+        "trace": -0x14a938d4cba6de0e58d44c,
+        "rist_base": "b0c9db54b05717a1dc7750ef24b967ca7c6933ffed",
+        "mont_base": 5,
         
         "combs":comb_config(2,5,17),
         "wnaf":wnaf_config(5,3),
-        "window_bits":3,
+        "window_bits":5,
         
         "eddsa_no_context": 1,
         "eddsa_dom":"SigE168"

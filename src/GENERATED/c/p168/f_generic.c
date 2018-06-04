@@ -56,8 +56,8 @@ mask_t gf_hibit(const gf x) {
 mask_t gf_lobit(const gf x) {
     gf y;
     gf_copy(y,x);
-    gf_strong_reduce(y);
-    return -(y->limb[0]&1);
+	gf_strong_reduce(y);
+	return -(y->limb[0]&1);
 }
 
 /** Deserialize from wire format; return -1 on success and 0 on failure. */
@@ -86,7 +86,7 @@ mask_t gf_deserialize (gf x, const uint8_t serial[SER_BYTES], int with_hibit, ui
 /** Reduce to canonical form. */
 void gf_strong_reduce (gf a) {
     /* first, clear high */
-    gf_weak_reduce(a); /* Determined to have negligible perf impact. */
+	gf_weak_reduce(a); /* Determined to have negligible perf impact. */
 
     /* now the total is less than 2p */
 

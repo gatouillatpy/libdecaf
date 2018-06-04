@@ -1089,28 +1089,29 @@ void API_NS(point_mul_by_ratio_and_encode_like_eddsa) (
         gf_sqr ( x, q->x );
         gf_sqr ( t, q->y );
         gf_add( u, x, t );
-        gf_add( z, q->y, q->x );
-        gf_sqr ( y, z);
-        gf_sub ( y, y, u );
-        gf_sub ( z, t, x );
-        gf_sqr ( x, q->z );
-        gf_add ( t, x, x); 
-        gf_sub ( t, t, z);
-        gf_mul ( x, t, y );
-        gf_mul ( y, z, u );
-        gf_mul ( z, u, t );
-        decaf_bzero(u,sizeof(u));
+		gf_add( z, q->y, q->x );
+		gf_sqr ( y, z);
+		gf_sub ( y, y, u );
+		gf_sub ( z, t, x );
+		gf_sqr ( x, q->z );
+		gf_add ( t, x, x);
+		gf_sub ( t, t, z);
+		gf_mul ( x, t, y );
+		gf_mul ( y, z, u );
+		gf_mul ( z, u, t );
+		decaf_bzero(u,sizeof(u));
     }
 #endif
     /* Affinize */
-    gf_invert(z,z,1);
-    gf_mul(t,x,z);
-    gf_mul(x,y,z);
-    
+	gf_invert(z,z,1);
+	gf_mul(t,x,z);
+	gf_sub(t, ZERO, t); /* required for E-168 */
+	gf_mul(x,y,z);
+
     /* Encode */
-    enc[DECAF_EDDSA_168_PRIVATE_BYTES-1] = 0;
-    gf_serialize(enc, x, 1);
-    enc[DECAF_EDDSA_168_PRIVATE_BYTES-1] |= 0x80 & gf_lobit(t);
+	enc[DECAF_EDDSA_168_PRIVATE_BYTES - 1] = 0;
+	gf_serialize(enc, x, 1);
+	enc[DECAF_EDDSA_168_PRIVATE_BYTES-1] |= 0x80 & gf_lobit(t);
 
     decaf_bzero(x,sizeof(x));
     decaf_bzero(y,sizeof(y));
@@ -1127,9 +1128,9 @@ decaf_error_t API_NS(point_decode_like_eddsa_and_mul_by_ratio) (
     uint8_t enc2[DECAF_EDDSA_168_PUBLIC_BYTES];
     memcpy(enc2,enc,sizeof(enc2));
 
-    mask_t low = ~word_is_zero(enc2[DECAF_EDDSA_168_PRIVATE_BYTES-1] & 0x80);
-    enc2[DECAF_EDDSA_168_PRIVATE_BYTES-1] &= ~0x80;
-    
+	mask_t low = ~word_is_zero(enc2[DECAF_EDDSA_168_PRIVATE_BYTES-1] & 0x80);
+	enc2[DECAF_EDDSA_168_PRIVATE_BYTES-1] &= ~0x80;
+
     mask_t succ = gf_deserialize(p->y, enc2, 1, 0);
 #if 0 == 0
     succ &= word_is_zero(enc2[DECAF_EDDSA_168_PRIVATE_BYTES-1]);
@@ -1148,9 +1149,10 @@ decaf_error_t API_NS(point_decode_like_eddsa_and_mul_by_ratio) (
     
     gf_mul(p->x,p->z,p->t);
     succ &= gf_isr(p->t,p->x); /* 1/sqrt(num * denom) */
-    
+
     gf_mul(p->x,p->t,p->z); /* sqrt(num / denom) */
-    gf_cond_neg(p->x,gf_lobit(p->x)^low);
+	gf_cond_neg(p->x,gf_lobit(p->x)^low);
+	//gf_sub(p->x, ZERO, p->x); /* not necessary for E-168 */
     gf_copy(p->z,ONE);
   
     #if EDDSA_USE_SIGMA_ISOGENY
